@@ -5,6 +5,9 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import Tabs from './navigation/tabs'
 import Profile from './screens/Profile'
+import FoodDetail from './screens/FoodDetail'
+import RenderFood from './component/RenderFood'
+
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -17,9 +20,8 @@ const App = () => {
       >
         {/* Tabs */}
         <Stack.Screen name="Home" component={Tabs} />
-
-        {/* Screens */}
-        {/* <Stack.Screen name="Profile" component={Profile}  /> */}
+        <Stack.Screen name = 'FoodDetail' component = {FoodDetail}/> 
+        {/* <Stack.Screen name = 'RenderFood' component = {RenderFood}/>    */}
       </Stack.Navigator>
     </NavigationContainer>
   )

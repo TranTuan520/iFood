@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleSheet } from 'react-native'
+import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleShee, TouchableOpacity } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Swiper from 'react-native-swiper'
 import { COLORS, FONTS } from '../constants/theme'
 const { width, height } = Dimensions.get('window')
 
 import RecommendItem from '../component/RecommendItem'
+import RenderFood from '../component/RenderFood'
 export default class Home extends Component {
     renderHeader1() {
         return (
@@ -22,10 +23,10 @@ export default class Home extends Component {
 
             }}>
                 <TextInput
-                    placeholderTextColor='black'
+                    placeholderTextColor='gray'
                     placeholder="oppa Tuấn muốn ăn gì nè...." style={{
                         height: 40,
-                        ...FONTS.h4
+                        ...FONTS.h3
                     }} />
                 <View style={{
                     position: 'absolute',
@@ -43,7 +44,7 @@ export default class Home extends Component {
     renderHeader() {
         return (
             <View style={{
-                height: 80,
+                height: 70,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 backgroundColor: "tomato",
@@ -67,7 +68,7 @@ export default class Home extends Component {
                     shadowColor: 'black',
                     borderRadius: 32, margin: 16
                 }}> */}
-                    <Image source={require('../assets/kt.jpg')} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 2, borderColor: 'white', marginEnd: 6 }} resizeMode="cover" />
+                <Image source={require('../assets/kt.jpg')} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 2, borderColor: 'white', marginEnd: 6 }} resizeMode="cover" />
                 {/* </View> */}
             </View>
         )
@@ -76,15 +77,15 @@ export default class Home extends Component {
     renderBanners() {
         return (
             <View style={{ alignItems: 'center', elevation: 16 }}>
-                <Swiper              
-                 style={{                    
-                    height: width / 2,                    
-                     marginHorizontal: 6
-                }} autoplay autoplayTimeout={3}
-                  dotColor='gray' 
-                  activeDotColor='tomato'
-                 horizontal          
-                 showsHorizontalScrollIndicator = {false}>
+                <Swiper
+                    style={{
+                        height: width / 2,
+                        marginHorizontal: 6
+                    }} autoplay autoplayTimeout={3}
+                    dotColor='gray'
+                    activeDotColor='tomato'
+                    horizontal
+                    showsHorizontalScrollIndicator={false}>
                     <Image style={{
                         height: width / 2,
                         width: width - 6,
@@ -146,7 +147,8 @@ export default class Home extends Component {
                     }}>Foods</Text>
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <View style={{
+                    <TouchableOpacity 
+                    onPress = {()=>this.props.navigation.navigate('FoodDetail')} style={{
                         alignItems: 'center',
                         justifyContent: 'center',
                         width: 90,
@@ -163,7 +165,7 @@ export default class Home extends Component {
                             style={{ height: 60, width: 60 }} />
                         <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Hamburger</Text>
                         <FontAwesome name='chevron-circle-right' size={20} color='tomato' style={{ marginVertical: 4 }} />
-                    </View>
+                    </TouchableOpacity>
                     <View style={{
                         marginTop: 4,
                         alignItems: 'center',
@@ -244,40 +246,47 @@ export default class Home extends Component {
                     }}>Recommend</Text>
                 </View>
                 <View>
-                    <ScrollView horizontal showsHorizontalScrollIndicator = {false} >
-                        <RecommendItem />    
-                        <RecommendItem /> 
-                        <RecommendItem /> 
-                        <RecommendItem />             
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                        <RecommendItem />
+                        <RecommendItem />
+                        <RecommendItem />
+                        <RecommendItem />
                     </ScrollView>
                 </View>
             </View>
         )
     }
 
-    //main
-    renderMain() {
+    renderAllFood() {
         return (
-            <View>
-                <View style={{ justifyContent: 'space-between' }}>
-
-
-
-                </View>
-
-            </View>
+          <View>
+               <RenderFood navigation ={this.props.navigation} />               
+               <RenderFood navigation ={this.props.navigation}/>
+               <RenderFood navigation ={this.props.navigation}/>
+               <RenderFood navigation ={this.props.navigation}/>
+               <RenderFood navigation ={this.props.navigation}/>
+               <RenderFood navigation ={this.props.navigation}/>
+               <RenderFood navigation ={this.props.navigation}/>
+               <RenderFood navigation ={this.props.navigation}/>
+               <RenderFood navigation ={this.props.navigation}/>
+          </View>
+           
         )
     }
+
+    //main
+
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#fffffff' }}>
+            <View style={{ flex: 1, backgroundColor: '#fffff' }}>
                 {this.renderHeader()}
                 <ScrollView style={{}}>
                     {this.renderHeader1()}
                     {this.renderBanners()}
-                    {this.renderCategory()}
+                    {this.renderCategory()}                   
                     {this.renderRecommend()}
-                    {this.renderMain()}
+                    {this.renderRecommend()}                   
+                    {this.renderAllFood()}
                 </ScrollView>
             </View>
         )
