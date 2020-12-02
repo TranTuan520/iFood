@@ -8,6 +8,7 @@ import Icon from 'react-native-ionicons'
 import Profile from '../screens/Profile'
 import Maps from '../screens/Map'
 
+
 const Tab = createMaterialBottomTabNavigator();
 
 const tabs = () => {
@@ -35,7 +36,7 @@ const tabs = () => {
         component={Maps}
         options={{
           tabBarLabel: 'Near me',
-          tabBarColor:'green',
+          tabBarColor:'tomato',
           tabBarIcon: ({ color }) => (
             <FontAwesome name="location-arrow" color={color} size={24} />
           ),
@@ -46,12 +47,13 @@ const tabs = () => {
         component={Profile}
         options={{
           tabBarLabel: 'Profile',
-          tabBarColor:'orange',
+          tabBarColor:'tomato',
           tabBarIcon: ({ color }) => (
             <FontAwesome name="user" color={color} size={24} />
           ),
         }}
       />
+    
     </Tab.Navigator>      
     )
 }

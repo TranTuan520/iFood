@@ -7,6 +7,8 @@ import Tabs from './navigation/tabs'
 import Profile from './screens/Profile'
 import FoodDetail from './screens/FoodDetail'
 import RenderFood from './component/RenderFood'
+import Login from './screens/Login'
+import Signup from './screens/Signup'
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -16,12 +18,13 @@ const App = () => {
         screenOptions={{
           headerShown: false
         }}
-        initialRouteName={'Home'}
+        initialRouteName={'Login'}
       >
         {/* Tabs */}
         <Stack.Screen name="Home" component={Tabs} />
         <Stack.Screen name = 'FoodDetail' component = {FoodDetail}/> 
-        {/* <Stack.Screen name = 'RenderFood' component = {RenderFood}/>    */}
+        <Stack.Screen name = 'Login' component = {Login}/>
+        <Stack.Screen name = 'Signup' component = {Signup}/>{/* <Stack.Screen name = 'RenderFood' component = {RenderFood}/>    */}
       </Stack.Navigator>
     </NavigationContainer>
   )

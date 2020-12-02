@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleShee, TouchableOpacity } from 'react-native'
+import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleShee, TouchableOpacity , PermissionsAndroid} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Swiper from 'react-native-swiper'
 import { COLORS, FONTS } from '../constants/theme'
@@ -7,7 +7,13 @@ const { width, height } = Dimensions.get('window')
 
 import RecommendItem from '../component/RecommendItem'
 import RenderFood from '../component/RenderFood'
+
+
+
+
 export default class Home extends Component {
+    
+    
     renderHeader1() {
         return (
             <View style={{
@@ -133,7 +139,7 @@ export default class Home extends Component {
                     alignItems: 'center',
                     paddingVertical: 2,
                     marginTop: 8,
-                    marginBottom: 8,
+                    marginBottom: 4,
                     borderRadius: 8,
                     justifyContent: 'center',
                     flexDirection: 'row',
@@ -158,7 +164,7 @@ export default class Home extends Component {
                         marginHorizontal: 8,
                         marginTop: 4,
                         elevation: 8,
-                        marginBottom: 16,
+                        marginBottom: 4,
                     }}>
                         <Image style={{ ...FONTS.h4 }}
                             source={require('../assets/icons/hamburger.png')}
@@ -176,7 +182,7 @@ export default class Home extends Component {
                         borderRadius: 8,
                         marginHorizontal: 8,
                         elevation: 8,
-                        marginBottom: 16,
+                        marginBottom: 4,
                     }}>
                         <Image style={{ ...FONTS.h4 }} source={require('../assets/icons/milktea.png')} style={{ height: 60, width: 60 }} />
                         <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Milk Tea</Text>
@@ -192,7 +198,7 @@ export default class Home extends Component {
                         borderRadius: 8,
                         marginHorizontal: 8,
                         elevation: 8,
-                        marginBottom: 16,
+                        marginBottom: 4,
                     }}>
                         <Image source={require('../assets/icons/pancake.png')} style={{ height: 60, width: 60 }} />
                         <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Pancake</Text>
@@ -208,7 +214,7 @@ export default class Home extends Component {
                         borderRadius: 8,
                         marginHorizontal: 8,
                         elevation: 8,
-                        marginBottom: 16,
+                        marginBottom: 4,
 
                     }}>
                         <Image source={require('../assets/icons/ice-cream.png')} style={{ height: 60, width: 60 }} />

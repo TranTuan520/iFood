@@ -10,17 +10,17 @@ import RenderFood from '../component/RenderFood'
 export class FoodDetail extends Component {
     renderHeader() {
         return (
-            <View style={{ flexDirection: 'row', height: 50, width: width, margin: 8, marginStart: 16 }}>
+            <View style={{ height: 70, width: width, margin: 8, marginStart: 16 }}>
                 <FontAwesome name='angle-left' size={50} color='black'
                     style={{ marginRight: 4 }} onPress={() => this.props.navigation.goBack()} />
+                      <Text style={{ ...FONTS.h1, marginVertical: 2, }}>Dog meat in heaven</Text>
             </View>
         )
     }
     renderFood() {
         return (
-            <View style={{ alignItems: 'center' }}>
-                <Text style={{ ...FONTS.h1, marginVertical: 2 }}>The dog in Heaving </Text>
-                <Image source={require('../assets/food0.jpg')} style={{ width: 400, height: 300, borderRadius: 13, marginVertical: 16 }} ></Image>
+            <View style={{ alignItems: 'center' }}>                                          
+                <Image source={require('../assets/food1.jpg')} style={{ width: 400, height: 300, borderRadius: 13, marginVertical: 16 }} ></Image>
                 <View style={{ flexDirection: 'row', height: 80, width: 350, backgroundColor: '#ff8a65', borderRadius: 8, elevation: 8 }}>
                     <View style={{
                         width: 90, flex: 1,
@@ -42,16 +42,16 @@ export class FoodDetail extends Component {
                         <Text style={{ ...FONTS.h3, color: 'white' }}>Type</Text>
                     </View>
 
-                    <View style={{
+                    <TouchableOpacity style={{
                          flex: 1,
                        borderRadius: 8,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor:'green'
+                        backgroundColor:'green', elevation: 8
                     }}>
                         <Text style={{ ...FONTS.h3, color: 'white' }}>Add to Cart</Text>
                         
-                    </View>
+                    </TouchableOpacity>
                     {/* <View style={{
                         width: 90, flex: 1,
                         borderRadius: 22,
@@ -109,15 +109,16 @@ export class FoodDetail extends Component {
                         (Lâu ngày tâm hồn trở nên trống rỗng)
                         Chẳng tìm ra chân tình
                         khiến người ta chỉ còn một thế giới hời hợt vô tâm
+                        
                     </Text>
                 </ScrollView>
             </View>
-
+            
         )
     }
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#fffff' }}>
+            <View style={{ flex: 1, backgroundColor: '#fff' }}>
                 {this.renderHeader()}
                 {this.renderFood()}
                 {this.renderDescription()}

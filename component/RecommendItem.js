@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleSheet } from 'react-native'
+import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Swiper from 'react-native-swiper'
 import { COLORS, FONTS } from '../constants/theme'
@@ -7,12 +7,12 @@ const { width, height } = Dimensions.get('window')
 
 const RecommendItem = () => {
     return (
-        <View style={{
-            width: 320, height: 250,
+        <TouchableOpacity style={{
+            width: 320, height: 230,
             backgroundColor: '#ffff',
             elevation: 8,
             borderRadius: 6,
-            marginVertical: 8,
+            marginVertical: 6,
             marginHorizontal: 4,
             borderColor: '#f5f5f5',
             borderWidth: 1,
@@ -33,17 +33,27 @@ const RecommendItem = () => {
             <View style={{ flexDirection: 'row' }}>
                 <Text style={{ ...FONTS.h2, marginStart: 8 }}>$ 90.00</Text>
                 {/* button */}
-                <View>
-                    <View style={{
-                        width: 95, height: 30, backgroundColor: 'white', marginStart: 64, borderRadius: 8,
-                        elevation: 4, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
-                    }}>
-                        <FontAwesome name='plus-square' size={20} color='tomato' />
-                        <Text style={{ ...FONTS.h4, marginStart: 4 }}>add to cart</Text>
-                    </View>
+                <View style = {{flexDirection:'row'}}>
+                    <TouchableOpacity style = {{marginStart: 40}} >
+                        <View style={{
+                            width: 90, height: 30, backgroundColor: 'tomato', alignItems: 'center',
+                            borderRadius: 4,
+                            marginHorizontal: 6,
+                        }}>
+                            <Text style={{ ...FONTS.h3, color: 'white' }}>Add to cart</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity >
+                        <View style={{
+                            width: 90, height: 30, backgroundColor: 'tomato', alignItems: 'center',
+                            borderRadius: 4,
+                        }}>
+                            <Text style={{ ...FONTS.h3, color: 'white' }}>Oder now</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
