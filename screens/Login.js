@@ -4,6 +4,16 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { COLORS, FONTS } from '../constants/theme'
 const { width, height } = Dimensions.get('window')
 export class Login extends Component {
+    state = {
+        user:'',
+        password:''
+    }
+    checkLogin = () =>{
+        if(this.state.user === 'admin')
+            this.props.navigation.navigate('Manager')
+        else
+        this.props.navigation.navigate('Home')
+    }
     render() {
         return (
             <ImageBackground             
@@ -22,7 +32,7 @@ export class Login extends Component {
                 elevation: 1
             }}>
                 <FontAwesome name='envelope-square' size={32} color='tomato' style={{ marginStart: 6 }} />
-                <TextInput placeholder='Enter Email' height={40} onChangeText={() => { }} />
+                <TextInput placeholder='Enter Email' height={40} onChangeText={(user) => {this.setState({user})}} />
             </View>
             
 
@@ -38,12 +48,12 @@ export class Login extends Component {
                 marginTop: 8
             }}>
                 <FontAwesome name='lock' size={32} color='tomato' style={{ marginStart: 6 }} />
-                <TextInput placeholder=' Enter Password' height={40} secureTextEntry onChangeText={() => { }} />
+                <TextInput placeholder=' Enter Password' height={40} secureTextEntry onChangeText={(password) => {this.setState({password})}} />
             </View>          
             <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>
                 <TouchableOpacity style={{ width: 80, height: 40, alignItems: 'center', backgroundColor: 'tomato', borderRadius: 8, elevation: 4, marginHorizontal: 4 }}>
                     <Text style={{ ...FONTS.h2, color: 'white' }} 
-                     onPress = {()=>this.props.navigation.navigate('Home')}
+                     onPress = {()=>this.checkLogin()}
                      >Login</Text>
                 </TouchableOpacity>
                 {/*  */}

@@ -9,6 +9,7 @@ import FoodDetail from './screens/FoodDetail'
 import RenderFood from './component/RenderFood'
 import Login from './screens/Login'
 import Signup from './screens/Signup'
+import index from './screens/Manager/index'
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -24,7 +25,9 @@ const App = () => {
         <Stack.Screen name="Home" component={Tabs} />
         <Stack.Screen name = 'FoodDetail' component = {FoodDetail}/> 
         <Stack.Screen name = 'Login' component = {Login}/>
-        <Stack.Screen name = 'Signup' component = {Signup}/>{/* <Stack.Screen name = 'RenderFood' component = {RenderFood}/>    */}
+        <Stack.Screen name = 'Signup' component = {Signup}/>
+        <Stack.Screen name = 'Manager' component = {index}/>
+        {/* <Stack.Screen name = 'RenderFood' component = {RenderFood}/>    */}
       </Stack.Navigator>
     </NavigationContainer>
   )
