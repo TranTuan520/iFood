@@ -50,23 +50,23 @@ export default class Home extends Component {
     renderHeader() {
         return (
             <View style={{
-                height: 70,
+                height: 55,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 backgroundColor: "tomato",
                 //paddingVertical: 4
                 alignItems: 'center',
-                borderBottomLeftRadius: 8,
-                borderBottomRightRadius: 8,
+                // borderBottomLeftRadius: 8,
+                // borderBottomRightRadius: 8,
                 elevation: 8
 
             }}>
                 <View>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ ...FONTS.h2, color: 'white', marginHorizontal: 8, }}>Good Morning</Text>
+                        <Text style={{ ...FONTS.h2, color: 'white', marginHorizontal: 8, }}>hi! Tuan Chan</Text>
                         {/* <FontAwesome name='coffee' size={24} color='white' /> */}
                     </View>
-                    <Text style={{ ...FONTS.h1, color: 'white', marginLeft: 20, }}>Tuấn</Text>
+                    {/* <Text style={{ ...FONTS.h1, color: 'white', marginLeft: 20, }}>Tuấn</Text> */}
                 </View>
                 {/* <View style={{
                     justifyContent: 'center', alignItems: 'center',
@@ -74,7 +74,9 @@ export default class Home extends Component {
                     shadowColor: 'black',
                     borderRadius: 32, margin: 16
                 }}> */}
-                <Image source={require('../assets/kt.jpg')} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 2, borderColor: 'white', marginEnd: 6 }} resizeMode="cover" />
+               <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Profile')}>
+               <Image source={require('../assets/kt.jpg')} style={{ width: 45, height: 45, borderRadius: 30, borderWidth: 2, borderColor: 'white', marginEnd: 6 }} resizeMode="cover"  />
+               </TouchableOpacity>
                 {/* </View> */}
             </View>
         )
@@ -143,7 +145,9 @@ export default class Home extends Component {
                     borderRadius: 8,
                     justifyContent: 'center',
                     flexDirection: 'row',
-                    elevation: 8
+                    elevation: 8,
+                    borderTopLeftRadius: 0,
+                    
                 }}>
                     <FontAwesome name='list-ul' size={16} color='white'
                         style={{ marginRight: 4 }} />
@@ -163,14 +167,14 @@ export default class Home extends Component {
                         borderRadius: 8,
                         marginHorizontal: 8,
                         marginTop: 4,
-                        elevation: 8,
+                        elevation: 2,
                         marginBottom: 4,
                     }}>
                         <Image style={{ ...FONTS.h4 }}
                             source={require('../assets/icons/hamburger.png')}
                             style={{ height: 60, width: 60 }} />
                         <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Hamburger</Text>
-                        <FontAwesome name='chevron-circle-right' size={20} color='tomato' style={{ marginVertical: 4 }} />
+                        <FontAwesome name='angle-double-right' size={24}  color='tomato' style={{ marginVertical: 4 }} />
                     </TouchableOpacity>
                     <View style={{
                         marginTop: 4,
@@ -181,12 +185,12 @@ export default class Home extends Component {
                         backgroundColor: '#ffff',
                         borderRadius: 8,
                         marginHorizontal: 8,
-                        elevation: 8,
+                        elevation: 2,
                         marginBottom: 4,
                     }}>
                         <Image style={{ ...FONTS.h4 }} source={require('../assets/icons/milktea.png')} style={{ height: 60, width: 60 }} />
                         <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Milk Tea</Text>
-                        <FontAwesome name='chevron-circle-right' size={20} color='tomato' style={{ marginVertical: 4 }} />
+                        <FontAwesome name='angle-double-right' size={24} color='tomato' style={{ marginVertical: 4 }} />
                     </View>
                     <View style={{
                         marginTop: 4,
@@ -197,12 +201,12 @@ export default class Home extends Component {
                         backgroundColor: '#ffff',
                         borderRadius: 8,
                         marginHorizontal: 8,
-                        elevation: 8,
+                        elevation: 2,
                         marginBottom: 4,
                     }}>
                         <Image source={require('../assets/icons/pancake.png')} style={{ height: 60, width: 60 }} />
                         <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Pancake</Text>
-                        <FontAwesome name='chevron-circle-right' size={20} color='tomato' style={{ marginVertical: 4 }} />
+                        <FontAwesome name='angle-double-right' size={24}  color='tomato' style={{ marginVertical: 4 }} />
                     </View>
                     <View style={{
                         marginTop: 4,
@@ -213,13 +217,13 @@ export default class Home extends Component {
                         backgroundColor: '#ffff',
                         borderRadius: 8,
                         marginHorizontal: 8,
-                        elevation: 8,
+                        elevation: 2,
                         marginBottom: 4,
 
                     }}>
                         <Image source={require('../assets/icons/ice-cream.png')} style={{ height: 60, width: 60 }} />
                         <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Cream</Text>
-                        <FontAwesome name='chevron-circle-right' size={20} color='tomato' style={{ marginVertical: 4 }} />
+                        <FontAwesome name='angle-double-right' size={24} color='tomato' style={{ marginVertical: 4, }} />
                     </View>
 
                 </ScrollView>
@@ -243,7 +247,8 @@ export default class Home extends Component {
                     borderRadius: 8,
                     justifyContent: 'center',
                     flexDirection: 'row',
-                    elevation: 4
+                    elevation: 4,
+                     borderTopLeftRadius: 0,
                 }}>
                     <FontAwesome name='list-ul' size={16} color='white'
                         style={{ marginRight: 4 }} />

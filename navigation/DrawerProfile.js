@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native';
+import Profile from  '../screens/Profile'
+import EditProfile from  '../screens/EditProfile'
 
-export class component extends Component {
+export default class DrawerProfile extends Component {
     render() {
         return (
             <View>
@@ -10,5 +13,3 @@ export class component extends Component {
         )
     }
 }
-
-export default component

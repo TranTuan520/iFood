@@ -7,7 +7,7 @@ import Home from '../screens/Home'
 import Icon from 'react-native-ionicons'
 import Profile from '../screens/Profile'
 import Maps from '../screens/Map'
-
+import Cart from '../screens/Cart'
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -43,13 +43,13 @@ const tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="Cart"
+        component={Cart}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Cart',
           tabBarColor:'tomato',
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" color={color} size={24} />
+            <FontAwesome name="opencart" color={color} size={24} />
           ),
         }}
       />

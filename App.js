@@ -6,7 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Tabs from './navigation/tabs'
 import Profile from './screens/Profile'
 import FoodDetail from './screens/FoodDetail'
-import RenderFood from './component/RenderFood'
+import Cart from './screens/Cart'
+
 import Login from './screens/Login'
 import Signup from './screens/Signup'
 import index from './screens/Manager/index'
@@ -27,7 +28,8 @@ const App = () => {
         <Stack.Screen name = 'Login' component = {Login}/>
         <Stack.Screen name = 'Signup' component = {Signup}/>
         <Stack.Screen name = 'Manager' component = {index}/>
-        {/* <Stack.Screen name = 'RenderFood' component = {RenderFood}/>    */}
+        <Stack.Screen name = 'Profile' component = {Profile}/>     
+        {/* <Stack.Screen name = 'Cart' component = {Cart}/>    */}
       </Stack.Navigator>
     </NavigationContainer>
   )

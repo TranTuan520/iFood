@@ -10,75 +10,29 @@ import RenderFood from '../component/RenderFood'
 export class FoodDetail extends Component {
     renderHeader() {
         return (
-            <View style={{ height: 70, width: width, margin: 8, marginStart: 16 }}>
+            <View style={{ height: 70, width: width,  marginStart: 16, flexDirection:'row', alignItems:'center' }}>
                 <FontAwesome name='angle-left' size={50} color='black'
-                    style={{ marginRight: 4 }} onPress={() => this.props.navigation.goBack()} />
-                      <Text style={{ ...FONTS.h1, marginVertical: 2, }}>Dog meat in heaven</Text>
+                    style={{ marginRight: 16 }} onPress={() => this.props.navigation.goBack()} />
+                      <Text numberOfLines = {1} style={{ ...FONTS.h1, width:width - 70}}>Dog meat in heaven </Text>
             </View>
         )
     }
     renderFood() {
         return (
             <View style={{ alignItems: 'center' }}>                                          
-                <Image source={require('../assets/food1.jpg')} style={{ width: 400, height: 300, borderRadius: 13, marginVertical: 16 }} ></Image>
-                <View style={{ flexDirection: 'row', height: 80, width: 350, backgroundColor: '#ff8a65', borderRadius: 8, elevation: 8 }}>
-                    <View style={{
-                        width: 90, flex: 1,
-                        
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                        <Text style={{ ...FONTS.h3, color: 'white' }}>$ 69.00</Text>
-                        <Text style={{ ...FONTS.h3, color: 'white' }}>Price</Text>
-                    </View>
-                    <View style = {{ width: 1, marginVertical: 16,  backgroundColor: 'white'}}></View>
-                    <View style={{
-                        width: 90, flex: 1,
-                       
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                        <Text style={{ ...FONTS.h3, color: 'white' }}>Healthy</Text>
-                        <Text style={{ ...FONTS.h3, color: 'white' }}>Type</Text>
-                    </View>
-
-                    <TouchableOpacity style={{
-                         flex: 1,
-                       borderRadius: 8,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor:'green', elevation: 8
-                    }}>
-                        <Text style={{ ...FONTS.h3, color: 'white' }}>Add to Cart</Text>
-                        
-                    </TouchableOpacity>
-                    {/* <View style={{
-                        width: 90, flex: 1,
-                        borderRadius: 22,
-                        backgroundColor: '#ff5722',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                        <FontAwesome name='plus' size={17} color='white' style={{ position: 'absolute', right: 8 }} />
-                        <Text style={{ ...FONTS.h2, color: 'white' }}>1</Text>
-                        <FontAwesome name='minus' size={17} color='white' style={{ position: 'absolute', left: 8 }} />
-                    </View> */}
-                </View>
+                <Image source={require('../assets/food1.jpg')} style={{ width: 400, height: 200, borderRadius: 13, marginVertical: 16 }} resizeMode = 'contain' ></Image>
+              
             </View>
         )
     }
 
     renderDescription() {
         return (
-            <View style={{ flex: 1, paddingBottom: 8, paddingHorizontal: 6 , marginTop: 6
-            }} >
-
+            <View style={{ flex: 1, paddingBottom: 8, paddingHorizontal: 16 , marginTop: 6}} >
+                    <Text style={{...FONTS.h1, color: 'black',}}>Description</Text>
                 <ScrollView contentContainerStyle={{}} showsVerticalScrollIndicator={false} >
-                    <Text style={{
-                        ...FONTS.h1, color: 'black',
-                    }}>Description</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.lightGray }}>
+                    
+                    <Text style={{ ...FONTS.body2, color: COLORS.lightGray, marginHorizontal: 18 }}>
                         Hôm nay thật khác
                         Tinh mơ tôi thức dậy thật sớm
                         Cuộn mền và gối vươn vai để lấy hơi thật sâu…
@@ -116,12 +70,51 @@ export class FoodDetail extends Component {
             
         )
     }
+   
+    renderFooter(){
+        return(
+          <View style = {{justifyContent:'center', marginBottom: 6, alignItems:'center'}}>
+                <View style={{ flexDirection: 'row', height: 60, width: 400, backgroundColor: '#ff8a65', borderRadius: 8, elevation: 8 }}>
+            <View style={{
+                width: 90, flex: 1,
+                
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <Text style={{ ...FONTS.h3, color: 'white' }}>$ 69.00</Text>
+                <Text style={{ ...FONTS.h3, color: 'white' }}>Price</Text>
+            </View>
+            <View style = {{ width: 1, marginVertical: 16,  backgroundColor: 'white'}}></View>
+            <View style={{
+                width: 90, flex: 1,
+               
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <Text style={{ ...FONTS.h3, color: 'white' }}>Healthy</Text>
+                <Text style={{ ...FONTS.h3, color: 'white' }}>Type</Text>
+            </View>
+
+            <TouchableOpacity style={{
+                 flex: 1,
+               borderRadius: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor:'green', elevation: 8
+            }}>
+                <Text style={{ ...FONTS.h3, color: 'white' }}>Add to Cart</Text>                
+            </TouchableOpacity>            
+        </View>
+          </View>
+        )
+    }
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <View style={{ flex: 1 }}>
                 {this.renderHeader()}
-                {this.renderFood()}
-                {this.renderDescription()}
+                {this.renderFood()}                
+                {this.renderDescription()}  
+                {this.renderFooter()}             
             </View>
         )
     }

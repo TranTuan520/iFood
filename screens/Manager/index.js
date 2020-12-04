@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions } from 'react-native'
+import { Text, View, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions, Alert } from 'react-native'
 
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage'
-import { utils } from '@react-native-firebase/app';
-// import ImagePicker from 'react-native-image-picker';
-//import * as Progress from 'react-native-progress';
+
+
+import * as Progress from 'react-native-progress';
+import ImagePicker from "react-native-image-crop-picker";
 
 import { Button } from 'react-native-paper'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -17,56 +18,102 @@ const ref = database().ref('/Food/');
 export class Manager extends Component {
     state = {
         FoodName: '',
-        FoodPrice:'',
-        FoodImage: [],
+        FoodPrice: '',
+        FoodImage: '',
         FoodType: '',
-        FoodDescription:''
+        FoodDescription: '',
+
+        image: null,
+        uploading: null,
+        transferred: 0,
+
     }
- AddFood(){
-   const foodRef = database()
-  .ref
-  .push().set({
-    FoodName: this.state.FoodName,
-    FoodPrice:this.state.FoodPrice,
-    FoodImage: 'link image',
-    FoodType: this.state.FoodType,
-    FoodDescription:this.state.FoodDescription
-  })
-}
-    render() {        
+   
+    AddFood = async()=> {
+        await this.uploadImage();
+        const ref = database().ref('/Food').push();
+        ref.set({
+            FoodName: this.state.FoodName,
+            FoodPrice: this.state.FoodPrice,
+            FoodType: this.state.FoodType,
+            FoodDescription: this.state.FoodDescription,
+            FoodImage: this.state.FoodImage
+          })
+          .then(() => console.log('Data set.'));
+
+
+
+
+    }
+    openPicker = () => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            if (image) {
+                this.setState({ image: image.path })
+                console.log(this.state.image)
+            }
+        });
+    }
+
+    uploadImage = async () => {
+        this.setState({
+            transferred: 0,
+            uploading: true
+        })
+        const fileName = this.state.image.substring(this.state.image.lastIndexOf('/') + 1);
+        const task = storage().ref(`/ImageFood/${fileName}`).putFile(this.state.image);
+
+        //
+        task.on('state_changed', snapshot => {
+            Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+            console.log(Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000)
+        })
+        try {
+            await task;
+        } catch (e) {
+            console.log(e)
+        }
+         this.setState({FoodImage:  (await storage().ref(`/ImageFood/${fileName}`).getDownloadURL()).toString()})
+        console.log('food url '+this.state.FoodImage)
+        this.setState({ uploading: false })
+        Alert.alert('Photo uploaded!', 'uhm...uhm....ahhhh')
+        this.setState({ image: null })
+        console.log(this.state.uploading)
+    }
+
+    render() {
         return (
-            <View style = {{justifyContent:'center', alignItems:'center'}}>            
-            <TextInput placeholder = 'Food Price' onChangeText = {(FoodName)=>{this.setState({FoodName})}} />
-               <TextInput placeholder = 'Food Price' onChangeText = {(FoodPrice)=>{this.setState({FoodPrice})}} />
-               <TextInput placeholder = 'Food Type' onChangeText = {(FoodType)=>{this.setState({FoodType})}} />
-               <TextInput placeholder = 'Food Description' onChangeText = {(FoodDescription)=>this.setState({FoodDescription})} />
+            <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 6 }}>
+                <Image source={{ uri: this.state.image }} style={{ width: 100, height: 150, backgroundColor: 'tomato' }} resizeMode='contain' />
+                <TextInput placeholder='Food Price' onChangeText={(FoodName) => { this.setState({ FoodName }) }} />
+                <TextInput placeholder='Food Price' onChangeText={(FoodPrice) => { this.setState({ FoodPrice }) }} />
+                <TextInput placeholder='Food Type' onChangeText={(FoodType) => { this.setState({ FoodType }) }} />
+                <TextInput placeholder='Food Description' onChangeText={(FoodDescription) => this.setState({ FoodDescription })} />
 
-               <TouchableOpacity  style = {{borderRadius: 4, backgroundColor: 'tomato'}} onPress = {
-                   ()=>{
+                <TouchableOpacity style={{ borderRadius: 4, backgroundColor: 'tomato', marginVertical: 6 }} onPress={
+                    () => { this.openPicker() }
+                }>
+                    <Text style={{ ...FONTS.h2, color: 'white', padding: 8, }}>choose image</Text>
+                </TouchableOpacity>
 
-                    // ImagePicker.showImagePicker(options, response => {
-                    //     if (response.didCancel) {
-                    //       console.log('User cancelled image picker');
-                    //     } else if (response.error) {
-                    //       console.log('ImagePicker Error: ', response.error);
-                    //     } else if (response.customButton) {
-                    //       console.log('User tapped custom button: ', response.customButton);
-                    //     } else {
-                    //       const source = { uri: response.uri };
-                    //       console.log(source); 
-                    //       setImage(source);
-                    //     }
-                    //   });
-                   }
-               }>
-                   <Text style = {{...FONTS.h2, color: 'white', padding: 8}}>Add Food</Text>
-               </TouchableOpacity>
-               
-               <TouchableOpacity  style = {{borderRadius: 4, backgroundColor: 'tomato'}} onPress = {
-                   ()=>this.AddFood()
-               }>
-                   <Text style = {{...FONTS.h2, color: 'white', padding: 8}}>Add Food</Text>
-               </TouchableOpacity>
+                {this.state.uploading ? (
+                    <View style={{}}>
+                        <Progress.Bar progress={this.state.transferred} width={300} />
+                    </View>
+                ) : (
+                        <TouchableOpacity style={{ borderRadius: 4, backgroundColor: 'tomato', marginVertical: 6 }} onPress={
+                            () => { this.AddFood() }
+                        }>
+                            <Text style={{ ...FONTS.h2, color: 'white', padding: 8 }}>Add Food :D</Text>
+                        </TouchableOpacity>
+                    )}
+
+
+
+
             </View>
         )
     }
