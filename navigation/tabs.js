@@ -49,7 +49,7 @@ const tabs = () => {
           tabBarLabel: 'Cart',
           tabBarColor:'tomato',
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="opencart" color={color} size={24} />
+            <FontAwesome name="cart-plus" color={color} size={24} />
           ),
         }}
       />

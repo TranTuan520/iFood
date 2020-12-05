@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import ImagePicker from "react-native-image-crop-picker";
 
 import Tabs from './navigation/tabs'
 import Profile from './screens/Profile'
@@ -10,7 +11,9 @@ import Cart from './screens/Cart'
 
 import Login from './screens/Login'
 import Signup from './screens/Signup'
+
 import index from './screens/Manager/index'
+import ChangeInfo from './screens/ChangeInfo'
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -20,7 +23,7 @@ const App = () => {
         screenOptions={{
           headerShown: false
         }}
-        initialRouteName={'Login'}
+        initialRouteName={'ChangeInfo'}
       >
         {/* Tabs */}
         <Stack.Screen name="Home" component={Tabs} />
@@ -28,8 +31,8 @@ const App = () => {
         <Stack.Screen name = 'Login' component = {Login}/>
         <Stack.Screen name = 'Signup' component = {Signup}/>
         <Stack.Screen name = 'Manager' component = {index}/>
-        <Stack.Screen name = 'Profile' component = {Profile}/>     
-        {/* <Stack.Screen name = 'Cart' component = {Cart}/>    */}
+        <Stack.Screen name = 'Profile' component = {Profile}/>    
+        <Stack.Screen name = 'ChangeInfo' component = {ChangeInfo}/>            
       </Stack.Navigator>
     </NavigationContainer>
   )

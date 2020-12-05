@@ -40,16 +40,13 @@ export class Manager extends Component {
             FoodImage: this.state.FoodImage
           })
           .then(() => console.log('Data set.'));
-
-
-
-
     }
+    //
     openPicker = () => {
         ImagePicker.openPicker({
             width: 300,
             height: 400,
-            cropping: true
+           // cropping: true
         }).then(image => {
             if (image) {
                 this.setState({ image: image.path })
@@ -76,22 +73,23 @@ export class Manager extends Component {
         } catch (e) {
             console.log(e)
         }
-         this.setState({FoodImage:  (await storage().ref(`/ImageFood/${fileName}`).getDownloadURL()).toString()})
+        this.setState({FoodImage:  (await storage().ref(`/ImageFood/${fileName}`).getDownloadURL()).toString()})
         console.log('food url '+this.state.FoodImage)
         this.setState({ uploading: false })
         Alert.alert('Photo uploaded!', 'uhm...uhm....ahhhh')
         this.setState({ image: null })
         console.log(this.state.uploading)
     }
-
     render() {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 6 }}>
                 <Image source={{ uri: this.state.image }} style={{ width: 100, height: 150, backgroundColor: 'tomato' }} resizeMode='contain' />
-                <TextInput placeholder='Food Price' onChangeText={(FoodName) => { this.setState({ FoodName }) }} />
+                <TextInput placeholder='Food Name' onChangeText={(FoodName) => { this.setState({ FoodName }) }} />
                 <TextInput placeholder='Food Price' onChangeText={(FoodPrice) => { this.setState({ FoodPrice }) }} />
                 <TextInput placeholder='Food Type' onChangeText={(FoodType) => { this.setState({ FoodType }) }} />
-                <TextInput placeholder='Food Description' onChangeText={(FoodDescription) => this.setState({ FoodDescription })} />
+                <TextInput multiline = {true} textAlignVertical = 'top' placeholder='Food Description' onChangeText={(FoodDescription) => this.setState({ FoodDescription })} 
+                style = {{height: 120,width: 250, borderColor:'black', borderWidth: 1}}
+                />
 
                 <TouchableOpacity style={{ borderRadius: 4, backgroundColor: 'tomato', marginVertical: 6 }} onPress={
                     () => { this.openPicker() }
@@ -110,10 +108,6 @@ export class Manager extends Component {
                             <Text style={{ ...FONTS.h2, color: 'white', padding: 8 }}>Add Food :D</Text>
                         </TouchableOpacity>
                     )}
-
-
-
-
             </View>
         )
     }

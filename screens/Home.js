@@ -5,15 +5,26 @@ import Swiper from 'react-native-swiper'
 import { COLORS, FONTS } from '../constants/theme'
 const { width, height } = Dimensions.get('window')
 
+//database
+import database from "@react-native-firebase/database";
+
 import RecommendItem from '../component/RecommendItem'
 import RenderFood from '../component/RenderFood'
+
+getAllFood = ()=>{
+    database().ref().once('value').then(snapshot=>{
+        console.log('data: '+ JSON.stringify(snapshot))
+    })
+}
 
 
 
 
 export default class Home extends Component {
     
-    
+    componentDidMount(){
+        getAllFood()
+    }
     renderHeader1() {
         return (
             <View style={{
