@@ -65,7 +65,7 @@ export class Manager extends Component {
 
         //
         task.on('state_changed', snapshot => {
-            Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+            this.setState({transferred: Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000})
             console.log(Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000)
         })
         try {
@@ -108,6 +108,11 @@ export class Manager extends Component {
                             <Text style={{ ...FONTS.h2, color: 'white', padding: 8 }}>Add Food :D</Text>
                         </TouchableOpacity>
                     )}
+                     <TouchableOpacity style={{ borderRadius: 4, backgroundColor: 'tomato', marginVertical: 6 }} onPress={
+                            () => { this.props.navigation.navigate('AddCategory') }
+                        }>
+                            <Text style={{ ...FONTS.h2, color: 'white', padding: 8 }}>Add Category :D</Text>
+                        </TouchableOpacity>
             </View>
         )
     }

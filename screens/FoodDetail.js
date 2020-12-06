@@ -8,19 +8,20 @@ const { width, height } = Dimensions.get('window')
 import RecommendItem from '../component/RecommendItem'
 import RenderFood from '../component/RenderFood'
 export class FoodDetail extends Component {
+    Food = this.props.route.params.food;
     renderHeader() {
         return (
             <View style={{ height: 70, width: width,  marginStart: 16, flexDirection:'row', alignItems:'center' }}>
                 <FontAwesome name='angle-left' size={50} color='black'
                     style={{ marginRight: 16 }} onPress={() => this.props.navigation.goBack()} />
-                      <Text numberOfLines = {1} style={{ ...FONTS.h1, width:width - 70}}>Dog meat in heaven </Text>
+                      <Text numberOfLines = {1} style={{ ...FONTS.h1, width:width - 70}}>{this.Food.value.FoodName}</Text>
             </View>
         )
     }
     renderFood() {
         return (
             <View style={{ alignItems: 'center' }}>                                          
-                <Image source={require('../assets/food1.jpg')} style={{ width: 400, height: 200, borderRadius: 13, marginVertical: 16 }} resizeMode = 'contain' ></Image>
+                <Image source={{uri: this.Food.value.FoodImage}} style={{ width: 400, height: 200, borderRadius: 13, marginVertical: 16 }} resizeMode = 'contain' ></Image>
               
             </View>
         )
@@ -33,37 +34,7 @@ export class FoodDetail extends Component {
                 <ScrollView contentContainerStyle={{}} showsVerticalScrollIndicator={false} >
                     
                     <Text style={{ ...FONTS.body2, color: COLORS.lightGray, marginHorizontal: 18 }}>
-                        Hôm nay thật khác
-                        Tinh mơ tôi thức dậy thật sớm
-                        Cuộn mền và gối vươn vai để lấy hơi thật sâu…
-                        Giờ đi đâu cũng thấy đông người
-                        đến lúc chỉ mong sống xa thành phố
-                        Tìm về nơi hoang sơ yên bình
-                        quên đi tôi đã sống thế nào…
-                        Chorus:
-                        Chơi vơi đứng giữa cuộc đời
-                        cô đơn không muốn về nhà
-                        Chờ mong ai nắm tay tôi sẻ chia và
-                        động lòng khi tôi khóc…
-                        Gió mát xua tan lo âu
-                        Non xanh che hết muộn sầu
-                        là nơi tôi muốn dừng lại:
-                        nơi tồn tại Thật Lòng và Cảm Thông
-                        I am lonely wherever I go
-                        What should I do?
-                        Why why… I am lonely wherever I go?
-                        Đời người không những ngắn ngủi và chóng tàn
-                        Chỉ còn mình với chiếc bóng của chính mình
-                        Muốn hét lên những ngại ngần
-                        rồi biết chẳng có ai nghe
-                        lòng càng thêm chông chênh…
-                        ” I’m fine! Dont worry!”
-                        (Thật ra là cô đơn)
-                        ” I Am not Okay”
-                        (Lâu ngày tâm hồn trở nên trống rỗng)
-                        Chẳng tìm ra chân tình
-                        khiến người ta chỉ còn một thế giới hời hợt vô tâm
-                        
+                       {this.Food.value.FoodDescription}                        
                     </Text>
                 </ScrollView>
             </View>
@@ -81,7 +52,7 @@ export class FoodDetail extends Component {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                <Text style={{ ...FONTS.h3, color: 'white' }}>$ 69.00</Text>
+                <Text style={{ ...FONTS.h3, color: 'white' }}>$ {this.Food.value.FoodPrice}</Text>
                 <Text style={{ ...FONTS.h3, color: 'white' }}>Price</Text>
             </View>
             <View style = {{ width: 1, marginVertical: 16,  backgroundColor: 'white'}}></View>
@@ -91,7 +62,7 @@ export class FoodDetail extends Component {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                <Text style={{ ...FONTS.h3, color: 'white' }}>Healthy</Text>
+                <Text style={{ ...FONTS.h3, color: 'white' }}>{this.Food.value.FoodType}</Text>
                 <Text style={{ ...FONTS.h3, color: 'white' }}>Type</Text>
             </View>
 

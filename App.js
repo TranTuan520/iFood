@@ -14,6 +14,7 @@ import Signup from './screens/Signup'
 
 import index from './screens/Manager/index'
 import ChangeInfo from './screens/ChangeInfo'
+import AddCatgory from './screens/Manager/AddCategory'
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -23,16 +24,17 @@ const App = () => {
         screenOptions={{
           headerShown: false
         }}
-        initialRouteName={'ChangeInfo'}
+        initialRouteName={'Home'}
       >
-        {/* Tabs */}
+      {/* Tabs */}
         <Stack.Screen name="Home" component={Tabs} />
         <Stack.Screen name = 'FoodDetail' component = {FoodDetail}/> 
         <Stack.Screen name = 'Login' component = {Login}/>
         <Stack.Screen name = 'Signup' component = {Signup}/>
         <Stack.Screen name = 'Manager' component = {index}/>
         <Stack.Screen name = 'Profile' component = {Profile}/>    
-        <Stack.Screen name = 'ChangeInfo' component = {ChangeInfo}/>            
+        <Stack.Screen name = 'ChangeInfo' component = {ChangeInfo}/>   
+        <Stack.Screen name = 'AddCategory' component = {AddCatgory}/>         
       </Stack.Navigator>
     </NavigationContainer>
   )

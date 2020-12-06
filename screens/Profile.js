@@ -28,7 +28,7 @@ export default class Profile extends Component {
                     
 
                 }}>
-                    <Image source={require('../assets/kt.jpg')}
+                    <Image source={require('../assets/avt.jpg')}
                         style={{
                             height: 120,
                             width: 120,
@@ -100,7 +100,7 @@ export default class Profile extends Component {
                     <FontAwesome name='sliders' size={24} style={{ marginEnd: 6 }} color='white' />
                     <Text style={{ ...FONTS.h2, color: 'white' }}>Option</Text>
                 </View>
-                <TouchableOpacity style={{ flexDirection: 'row', marginVertical: 6, marginStart: 32,width: 130, elevation: 4}}>
+                <TouchableOpacity style={{ flexDirection: 'row', marginVertical: 6, marginStart: 32,width: 130, elevation: 4}} onPress = {()=>this.props.navigation.navigate('ChangeInfo')}>
                     <FontAwesome name='cog' size={22} style={{ width: 26, height: 22 }} />
                     <Text style={{ ...FONTS.h3 }}>Change Info</Text>
                 </TouchableOpacity>

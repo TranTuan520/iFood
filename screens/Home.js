@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleShee, TouchableOpacity , PermissionsAndroid} from 'react-native'
+import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleShee, TouchableOpacity , PermissionsAndroid, FlatList} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Swiper from 'react-native-swiper'
 import { COLORS, FONTS } from '../constants/theme'
@@ -10,18 +10,36 @@ import database from "@react-native-firebase/database";
 
 import RecommendItem from '../component/RecommendItem'
 import RenderFood from '../component/RenderFood'
-
-getAllFood = ()=>{
-    database().ref().once('value').then(snapshot=>{
-        console.log('data: '+ JSON.stringify(snapshot))
+const Foods = new Map();
+const Data = [];
+getAllFood = async ()=>{
+      await database().ref('/Food/').once('value').then(snapshot=>{
+       //console.log( snapshot.val())   
+       snapshot.forEach((food)=>
+       {
+          // console.log(food)
+         //  console.log(food._snapshot.key)
+         
+          Data.push( food._snapshot)
+          
+        // Foods.push(new Map([['FoodName', food._snapshot.value.FoodName]]))        
+       })
     })
+   
+   console.log(Data.indexOf())
 }
 
 
 
 
+
+
+
+
 export default class Home extends Component {
-    
+    state = {
+        
+    }
     componentDidMount(){
         getAllFood()
     }
@@ -86,7 +104,7 @@ export default class Home extends Component {
                     borderRadius: 32, margin: 16
                 }}> */}
                <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Profile')}>
-               <Image source={require('../assets/kt.jpg')} style={{ width: 45, height: 45, borderRadius: 30, borderWidth: 2, borderColor: 'white', marginEnd: 6 }} resizeMode="cover"  />
+               <Image source={require('../assets/avt.jpg')} style={{ width: 45, height: 45, borderRadius: 30, borderWidth: 2, borderColor: 'white', marginEnd: 6 }} resizeMode="cover"  />
                </TouchableOpacity>
                 {/* </View> */}
             </View>
@@ -282,15 +300,7 @@ export default class Home extends Component {
     renderAllFood() {
         return (
           <View>
-               <RenderFood navigation ={this.props.navigation} />               
-               <RenderFood navigation ={this.props.navigation}/>
-               <RenderFood navigation ={this.props.navigation}/>
-               <RenderFood navigation ={this.props.navigation}/>
-               <RenderFood navigation ={this.props.navigation}/>
-               <RenderFood navigation ={this.props.navigation}/>
-               <RenderFood navigation ={this.props.navigation}/>
-               <RenderFood navigation ={this.props.navigation}/>
-               <RenderFood navigation ={this.props.navigation}/>
+               <RenderFood navigation ={this.props.navigation} Data = {Data} />
           </View>
            
         )

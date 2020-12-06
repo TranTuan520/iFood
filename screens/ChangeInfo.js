@@ -33,7 +33,7 @@ export default class ChangeInfo extends Component {
                     borderRadius: 60,
                     elevation: 16,                
                 }} onPress = {()=>this.openPicker()}>
-                    <Image source={require('../assets/kt.jpg')}
+                    <Image source={require('../assets/avt.jpg')}
                         style={{
                             height: 120,
                             width: 120,
@@ -44,7 +44,7 @@ export default class ChangeInfo extends Component {
                 </TouchableOpacity>
                 
                
-                <FontAwesome name='angle-left' size={50} style={{ position:'absolute', left:16, top: 8}} color='white' onPress={() => this.props.navigation.goBack()}/>
+                <FontAwesome name='angle-left' size={50} style={{ position:'absolute', left:16, top: 8, paddingRight: 8}} color='white' onPress={() => this.props.navigation.goBack()}/>
                 <TouchableOpacity style={{ backgroundColor: 'white', position: 'absolute', right: 16, top: 24, borderRadius: 4, width: 60, height: 30, alignItems: 'center', elevation: 4}}>
                     <Text size={50} style={{ ...FONTS.h2, color: 'black' }} onPress={() => this.props.navigation.goBack()}>Save</Text>
                 </TouchableOpacity>
