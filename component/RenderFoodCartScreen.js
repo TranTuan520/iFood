@@ -7,42 +7,47 @@ const { width, height } = Dimensions.get('window')
 
 const RenderFoodCartScreen = ({navigation}) => {
     return (
-        <TouchableOpacity onPress = {()=>navigation.navigate("FoodDetail")}>
+        <TouchableOpacity  activeOpacity = {0.9} onPress = {()=>navigation.navigate("FoodDetail")}>
             <View style={{
-            flex: 1, flexDirection: 'row', width: width, height: 130, backgroundColor: '#fffff', alignItems: 'center'
+             flex: 1,
+             flexDirection: 'row',
+             width: 420,
+             height: 100,
+             backgroundColor: '#ffff',
+             alignItems: 'center',
+             borderWidth: 2,
+             padding: 4,
+             marginVertical: 2,
+             alignItems: 'center',
+             borderRadius: 6,
+             borderColor: '#ffff',
+             elevation: 1
         }}>
             {/* image */}
             <View style={{ marginStart: 8, elevation: 4, }}>
-                <Image source={require('../assets/food1.jpg')} style={{ width: 120, height: 130, borderRadius: 4 }} resizeMode="cover" />
+                <Image source={require('../assets/food1.jpg')} style={{ width: 90, height: 90, borderRadius: 6,  }}  resizeMode="cover" />
             </View>
 
             <View style={{ marginHorizontal: 4, flex: 1 }}>
                 {/* title and price */}
-                <View style={{
-                    flexDirection: 'row',
-                    flex: 1
-                }}>
+               
                     <View style={{
-                        marginRight: 4,
+                        height: 50,       
                     }}>
-                        <Text style={{ ...FONTS.h2, flex: 1, elevation: 4 }}>Đùi gà chiên   </Text>
-                    </View>
-                </View >
-                {/* Description hay cai gi do */}
-                <View style={{ height: 60 }}>
-                    <Text numberOfLines={2} style={{ ...FONTS.h3, }}>Ga chien ngon vcl cac ban ah  </Text>
-                </View>
+                        <Text numberOfLines = {2} style={{ fontSize: 20, flex: 1, elevation: 4  }}>dfcdfdf edf</Text>
+                
+                </View >               
                 {/* Price && Buttons */}
                 <View style={{
-                    flexDirection: 'row', flex: 1, marginHorizontal: 4, justifyContent: 'flex-end',
-                    alignItems: 'flex-end'
+                     flexDirection: 'row', flex: 1, marginHorizontal: 4, justifyContent: 'flex-end',
+                     alignItems: 'flex-end'
                 }}>
                     {/* price */}
                     <Text style={{ ...FONTS.h2, color: 'gray', alignItems: 'center', flex: 1, alignItems: 'flex-start' }}>$ 69.0</Text>
                     {/* Button Add to cart */}
                     <View >
                         <View style={{
-                            width: 120, height: 40, backgroundColor: 'tomato', alignItems: 'center',
+                            width: 120, height: 25, backgroundColor: 'tomato', alignItems: 'center',
                             borderRadius: 4,
                             marginHorizontal: 12,
                             flexDirection:'row',
@@ -50,18 +55,18 @@ const RenderFoodCartScreen = ({navigation}) => {
                             padding: 4
                             
                         }}>
-                            <FontAwesome name = 'minus-circle' color = 'white' size = {24} onPress = {()=>{alert('-')}}/>
+                            <FontAwesome name = 'minus-circle' color = 'white' size = {22} onPress = {()=>{alert('-')}}/>
                             <Text style = {{...FONTS.h2, color :'white'}}>1</Text>
-                            <FontAwesome name = 'plus-circle' color = 'white' size = {24}  onPress = {()=>{}}/>
+                            <FontAwesome name = 'plus-circle' color = 'white' size = {22}  onPress = {()=>{}}/>
                         </View>
                     </View>
                     {/* Button Order now */}
-                    <TouchableOpacity >
+                    <TouchableOpacity  activeOpacity = {0.9} >
                         <View style={{
-                            width: 30, height: 40, backgroundColor: 'tomato', alignItems: 'center',
+                            width: 30, height: 25, backgroundColor: 'tomato', alignItems: 'center',
                             borderRadius: 4, justifyContent:'center'
                         }}>
-                             <FontAwesome name = 'trash' color = 'white' size = {24} />
+                             <FontAwesome name = 'trash' color = 'white' size = {22} />
                         </View>
                     </TouchableOpacity>
                 </View>

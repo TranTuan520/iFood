@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import { Text, View, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions, Alert } from 'react-native'
-import * as Progress from 'react-native-progress'
+import React, { Component } from 'react';
+import { Text, View, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions, Alert } from 'react-native';
+import * as Progress from 'react-native-progress';
 import ImagePicker from "react-native-image-crop-picker";
 import database from "@react-native-firebase/database";
-import storage from '@react-native-firebase/storage'
-import { COLORS, FONTS } from '../../constants/theme'
+import storage from '@react-native-firebase/storage';
+import { COLORS, FONTS } from '../../constants/theme';
 
 export class AddCategory extends Component {
     state = {
@@ -69,7 +69,7 @@ export class AddCategory extends Component {
         await this.uploadImage();
         database().ref('/Category').push().set({
             CategoryName: this.state.CategoryName,
-            CategoryImage: this.CategoryImage
+            CategoryImage: this.state.CategoryImage
         })
     }
 

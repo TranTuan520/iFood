@@ -22,7 +22,7 @@ export class Cart extends Component {
                     </View>
 
 
-                    <TouchableOpacity style={{
+                    <TouchableOpacity  activeOpacity = {0.8} style={{
                         flex: 1,
                         borderRadius: 8,
                         alignItems: 'center',

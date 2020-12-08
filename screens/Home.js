@@ -9,40 +9,47 @@ const { width, height } = Dimensions.get('window')
 import database from "@react-native-firebase/database";
 
 import RecommendItem from '../component/RecommendItem'
+import RenderCategory from "../component/RenderCategory";
 import RenderFood from '../component/RenderFood'
-const Foods = new Map();
-const Data = [];
-getAllFood = async ()=>{
-      await database().ref('/Food/').once('value').then(snapshot=>{
-       //console.log( snapshot.val())   
-       snapshot.forEach((food)=>
-       {
-          // console.log(food)
-         //  console.log(food._snapshot.key)
-         
-          Data.push( food._snapshot)
-          
-        // Foods.push(new Map([['FoodName', food._snapshot.value.FoodName]]))        
-       })
-    })
-   
-   console.log(Data.indexOf())
-}
-
-
-
-
-
 
 
 
 export default class Home extends Component {
     state = {
-        
+        isFinish: false,
+        Foods: [], 
+        Categories: []
     }
-    componentDidMount(){
-        getAllFood()
+    getAllFood = async ()=>{
+        await database().ref('/Food/').once('value').then(snapshot=>{
+         //console.log( snapshot.val())   
+         const Food = []         
+         snapshot.forEach((food)=>
+         {         
+            Food.push( food._snapshot)              
+         })
+         this.setState({Foods: Food})
+       //  console.log(this.state.Foods)
+      })
     }
+    getAllCategory = async () =>{
+        await database().ref('/Category/').once('value').then(snapshot=>{
+            const Category = []
+            snapshot.forEach((category)=>{
+                Category.push(category._snapshot);
+            })
+            this.setState({Categories:Category})
+           // console.log(Category)
+         })                  
+    }
+
+    
+    componentDidMount =  ()=>{
+        this.getAllFood()
+         this.getAllCategory()
+    }
+
+
     renderHeader1() {
         return (
             <View style={{
@@ -103,7 +110,7 @@ export default class Home extends Component {
                     shadowColor: 'black',
                     borderRadius: 32, margin: 16
                 }}> */}
-               <TouchableOpacity onPress = {()=>this.props.navigation.navigate('Profile')}>
+               <TouchableOpacity  activeOpacity = {0.9} onPress = {()=>this.props.navigation.navigate('Profile')}>
                <Image source={require('../assets/avt.jpg')} style={{ width: 45, height: 45, borderRadius: 30, borderWidth: 2, borderColor: 'white', marginEnd: 6 }} resizeMode="cover"  />
                </TouchableOpacity>
                 {/* </View> */}
@@ -157,113 +164,15 @@ export default class Home extends Component {
 
     // category
     renderCategory() {
-        return (
-            <View style={{
-                flex: 1,
-                //backgroundColor: 'rgba(0,0,0,0.3)',             
-                margin: 6,
-                borderRadius: 10,
-            }}>
-                <View style={{
-                    backgroundColor: 'tomato',
-                    width: 100,
-                    alignItems: 'center',
-                    paddingVertical: 2,
-                    marginTop: 8,
-                    marginBottom: 4,
-                    borderRadius: 8,
-                    justifyContent: 'center',
-                    flexDirection: 'row',
-                    elevation: 8,
-                    borderTopLeftRadius: 0,
-                    
-                }}>
-                    <FontAwesome name='list-ul' size={16} color='white'
-                        style={{ marginRight: 4 }} />
-                    <Text style={{
-                        ...FONTS.h2, color: 'white',
-
-                    }}>Foods</Text>
-                </View>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <TouchableOpacity 
-                    onPress = {()=>this.props.navigation.navigate('FoodDetail')} style={{
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 90,
-                        height: 120,
-                        backgroundColor: '#ffff',
-                        borderRadius: 8,
-                        marginHorizontal: 8,
-                        marginTop: 4,
-                        elevation: 2,
-                        marginBottom: 4,
-                    }}>
-                        <Image style={{ ...FONTS.h4 }}
-                            source={require('../assets/icons/hamburger.png')}
-                            style={{ height: 60, width: 60 }} />
-                        <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Hamburger</Text>
-                        <FontAwesome name='angle-double-right' size={24}  color='tomato' style={{ marginVertical: 4 }} />
-                    </TouchableOpacity>
-                    <View style={{
-                        marginTop: 4,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 90,
-                        height: 120,
-                        backgroundColor: '#ffff',
-                        borderRadius: 8,
-                        marginHorizontal: 8,
-                        elevation: 2,
-                        marginBottom: 4,
-                    }}>
-                        <Image style={{ ...FONTS.h4 }} source={require('../assets/icons/milktea.png')} style={{ height: 60, width: 60 }} />
-                        <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Milk Tea</Text>
-                        <FontAwesome name='angle-double-right' size={24} color='tomato' style={{ marginVertical: 4 }} />
-                    </View>
-                    <View style={{
-                        marginTop: 4,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 90,
-                        height: 120,
-                        backgroundColor: '#ffff',
-                        borderRadius: 8,
-                        marginHorizontal: 8,
-                        elevation: 2,
-                        marginBottom: 4,
-                    }}>
-                        <Image source={require('../assets/icons/pancake.png')} style={{ height: 60, width: 60 }} />
-                        <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Pancake</Text>
-                        <FontAwesome name='angle-double-right' size={24}  color='tomato' style={{ marginVertical: 4 }} />
-                    </View>
-                    <View style={{
-                        marginTop: 4,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 90,
-                        height: 120,
-                        backgroundColor: '#ffff',
-                        borderRadius: 8,
-                        marginHorizontal: 8,
-                        elevation: 2,
-                        marginBottom: 4,
-
-                    }}>
-                        <Image source={require('../assets/icons/ice-cream.png')} style={{ height: 60, width: 60 }} />
-                        <Text style={{ ...FONTS.h4, fontWeight: 'bold', color: 'gray' }}>Cream</Text>
-                        <FontAwesome name='angle-double-right' size={24} color='tomato' style={{ marginVertical: 4, }} />
-                    </View>
-
-                </ScrollView>
-
-
-            </View>
-        )
+       return(
+       <View style = {{height: 190}}>
+            <RenderCategory navigation = {this.props.navigation} Categories = {this.state.Categories} />
+       </View>
+       )
 
     }
 
-    renderRecommend() {
+    renderRecommend = () => {
         return (
             <View style={{ marginHorizontal: 8 }}>
                 <View style={{
@@ -277,7 +186,7 @@ export default class Home extends Component {
                     justifyContent: 'center',
                     flexDirection: 'row',
                     elevation: 4,
-                     borderTopLeftRadius: 0,
+                    borderTopLeftRadius: 0,
                 }}>
                     <FontAwesome name='list-ul' size={16} color='white'
                         style={{ marginRight: 4 }} />
@@ -286,7 +195,9 @@ export default class Home extends Component {
                     }}>Recommend</Text>
                 </View>
                 <View>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} 
+                 //pagingEnabled 
+                 >
                         <RecommendItem />
                         <RecommendItem />
                         <RecommendItem />
@@ -297,12 +208,16 @@ export default class Home extends Component {
         )
     }
 
+    _getFoodByCategory = () =>{
+        
+    }
+
     renderAllFood() {
         return (
-          <View>
-               <RenderFood navigation ={this.props.navigation} Data = {Data} />
-          </View>
-           
+            <View style = {{alignItems:'center'}}>
+                <RenderFood navigation={this.props.navigation} Foods={this.state.Foods} />
+            </View>
+
         )
     }
 
@@ -310,11 +225,11 @@ export default class Home extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#fffff' }}>
+            <View style={{ flex: 1, backgroundColor: '#fffff'}}>
                 {this.renderHeader()}
-                <ScrollView style={{}}>
+                <ScrollView showsVerticalScrollIndicator = {false} style={{}}>
                     {this.renderHeader1()}
-                    {this.renderBanners()}
+                    {this.renderBanners()} 
                     {this.renderCategory()}                   
                     {this.renderRecommend()}
                     {this.renderRecommend()}                   

@@ -21,8 +21,7 @@ export class FoodDetail extends Component {
     renderFood() {
         return (
             <View style={{ alignItems: 'center' }}>                                          
-                <Image source={{uri: this.Food.value.FoodImage}} style={{ width: 400, height: 200, borderRadius: 13, marginVertical: 16 }} resizeMode = 'contain' ></Image>
-              
+                <Image source={{uri: this.Food.value.FoodImage}} style={{ width: 400, height: 200, borderRadius: 13, marginVertical: 16 }} resizeMode = 'contain' ></Image>              
             </View>
         )
     }
@@ -66,7 +65,7 @@ export class FoodDetail extends Component {
                 <Text style={{ ...FONTS.h3, color: 'white' }}>Type</Text>
             </View>
 
-            <TouchableOpacity style={{
+            <TouchableOpacity activeOpacity = {0.8} style={{
                  flex: 1,
                borderRadius: 8,
                 alignItems: 'center',

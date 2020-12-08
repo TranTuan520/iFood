@@ -29,10 +29,12 @@ export class Login extends Component {
                 borderWidth: 2,
                 borderRadius: 4,
                 borderColor: 'tomato',
-                elevation: 1
+                borderStartWidth: 8,
+              
+                
             }}>
-                <FontAwesome name='envelope-square' size={32} color='tomato' style={{ marginStart: 6 }} />
-                <TextInput placeholder='Enter Email' height={40} onChangeText={(user) => {this.setState({user})}} />
+                <FontAwesome name='envelope-square' size={32} color='tomato' style={{ marginStart: 2, width: 28 }} />
+                <TextInput placeholder='Enter Email' height={40} width = {215} onChangeText={(user) => {this.setState({user})}} />
             </View>
             
 
@@ -43,15 +45,15 @@ export class Login extends Component {
                 height: 38,
                 borderWidth: 2,
                 borderRadius: 4,
-                borderColor: 'tomato',
-                elevation: 1,
-                marginTop: 8
+                borderColor: 'tomato',               
+                marginTop: 8,
+                borderStartWidth: 8,              
             }}>
-                <FontAwesome name='lock' size={32} color='tomato' style={{ marginStart: 6 }} />
-                <TextInput placeholder=' Enter Password' height={40} secureTextEntry onChangeText={(password) => {this.setState({password})}} />
+                <FontAwesome name='lock' size={32} color='tomato' style={{ marginStart: 2, width: 28 }} />
+                <TextInput placeholder='Enter Password' height={40} width = {215} secureTextEntry onChangeText={(password) => {this.setState({password})}} />
             </View>          
             <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>
-                <TouchableOpacity style={{ width: 80, height: 40, alignItems: 'center', backgroundColor: 'tomato', borderRadius: 8, elevation: 4, marginHorizontal: 4 }}>
+                <TouchableOpacity style={{ width: 120, height: 35, alignItems: 'center', backgroundColor: 'tomato', borderRadius: 8, elevation: 4, marginHorizontal: 4 }}>
                     <Text style={{ ...FONTS.h2, color: 'white' }} 
                      onPress = {()=>this.checkLogin()}
                      >Login</Text>

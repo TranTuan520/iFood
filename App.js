@@ -15,7 +15,7 @@ import Signup from './screens/Signup'
 import index from './screens/Manager/index'
 import ChangeInfo from './screens/ChangeInfo'
 import AddCatgory from './screens/Manager/AddCategory'
-
+import FoodByCategory from "./screens/FoodByCategory";
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -34,7 +34,8 @@ const App = () => {
         <Stack.Screen name = 'Manager' component = {index}/>
         <Stack.Screen name = 'Profile' component = {Profile}/>    
         <Stack.Screen name = 'ChangeInfo' component = {ChangeInfo}/>   
-        <Stack.Screen name = 'AddCategory' component = {AddCatgory}/>         
+        <Stack.Screen name = 'AddCategory' component = {AddCatgory}/>      
+        <Stack.Screen name = 'FoodByCategory' component = {FoodByCategory}/>         
       </Stack.Navigator>
     </NavigationContainer>
   )
