@@ -31,10 +31,10 @@ export class AddCategory extends Component {
                         </View>
                         ) :
                         (
-                        <TouchableOpacity style={{ borderRadius: 4, backgroundColor: 'tomato', marginVertical: 6 }} onPress={
+                        <TouchableOpacity style={{width: 200, alignItems: 'center', borderRadius: 4, backgroundColor: 'tomato', marginVertical: 6 }} onPress={
                             () => { this.uploadCategory() }
                         }>
-                            <Text style={{ ...FONTS.h2, color: 'white', padding: 8 }}>Add Food :D</Text>
+                            <Text style={{ ...FONTS.h2, color: 'white', padding: 8 }}>Add Category :D</Text>
                         </TouchableOpacity>
                         )
                 }

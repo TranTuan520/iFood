@@ -44,9 +44,9 @@ export default class Home extends Component {
     }
 
     
-    componentDidMount =  ()=>{
+    componentDidMount =  ()=>{        
         this.getAllFood()
-         this.getAllCategory()
+        this.getAllCategory()
     }
 
 

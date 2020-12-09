@@ -10,8 +10,8 @@ import RenderItem from '../component/RenderFoodCartScreen'
 export class Cart extends Component {
     render() {
         return (
-            <View style={{flex: 1, alignItems: 'center', marginTop: 4 }}>
-                                <View style={{ flexDirection: 'row', height: 60, width: 400, backgroundColor: '#ff8a65', borderRadius: 8, elevation: 8, marginVertical: 2,  }}>
+            <View style={{ flex: 1, alignItems: 'center', marginTop: 4 }}>
+                <View style={{ flexDirection: 'row', height: 60, width: 400, backgroundColor: '#ff8a65', borderRadius: 8, elevation: 8, marginVertical: 2, }}>
                     <View style={{
                         width: 90, flex: 1,
                         alignItems: 'center',
@@ -22,7 +22,7 @@ export class Cart extends Component {
                     </View>
 
 
-                    <TouchableOpacity  activeOpacity = {0.8} style={{
+                    <TouchableOpacity activeOpacity={0.8} style={{
                         flex: 1,
                         borderRadius: 8,
                         alignItems: 'center',
@@ -35,15 +35,15 @@ export class Cart extends Component {
                     </TouchableOpacity>
 
                 </View>
-                    <ScrollView >
-                        <RenderItem navigation={this.props.navigation} />
-                        <RenderItem navigation={this.props.navigation} />     
-                        <RenderItem navigation={this.props.navigation} />
-                        <RenderItem navigation={this.props.navigation} />  
-                        <RenderItem navigation={this.props.navigation} />
-                        <RenderItem navigation={this.props.navigation} />                    
-                    </ScrollView>
-               
+                <ScrollView >
+                    <RenderItem navigation={this.props.navigation} />
+                    <RenderItem navigation={this.props.navigation} />
+                    <RenderItem navigation={this.props.navigation} />
+                    <RenderItem navigation={this.props.navigation} />
+                    <RenderItem navigation={this.props.navigation} />
+                    <RenderItem navigation={this.props.navigation} />
+                </ScrollView>
+
 
             </View>
         )

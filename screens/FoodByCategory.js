@@ -44,8 +44,6 @@ export class FoodByCategory extends Component {
     componentDidMount(){
         this.getAllFood();
         this.getAllCategory();
- 
-       
     }
     renderCategory = ({ item }) =>{
         return (
