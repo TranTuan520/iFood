@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {
-    Text, View, ImageBackground, Image,
-    TextInput, TouchableOpacity, Dimensions,
-    Alert, ScrollView, Modal, StyleSheet
+    Text, View, Image,
+    TextInput, TouchableOpacity,
+    Alert, ScrollView, StyleSheet
 } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 
@@ -13,17 +13,10 @@ import storage from '@react-native-firebase/storage'
 import * as Progress from 'react-native-progress';
 import ImagePicker from "react-native-image-crop-picker";
 
-import { Button } from 'react-native-paper'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { COLORS, FONTS } from '../../constants/theme'
-const { width, height } = Dimensions.get('window')
 
-
-
-const ref = database().ref('/Food/');
-
-export class Manager extends Component {
-    state = {
+export class EditFood extends Component {
+    Food= this.props.route.params.food
+    state = {        
         FoodName: '',
         FoodPrice: '',
         FoodImage: '',
@@ -38,6 +31,14 @@ export class Manager extends Component {
     }
     componentDidMount = () => {
         this.getCategory()
+        console.log(`food: ${(this.props.route.params.food)}`)
+        this.setState({FoodName: this.Food.value.FoodName})
+        this.setState({FoodDescription: this.Food.value.FoodDescription})
+        this.setState({FoodPrice: this.Food.value.FoodPrice})
+        this.setState({FoodType: this.Food.value.FoodType})
+        this.setState({FoodImage: this.Food.value.FoodImage})   
+        
+        
     }
 
     AddFood = async () => {
@@ -126,14 +127,16 @@ export class Manager extends Component {
                     <TouchableOpacity
                         style={styles.imgContainer}
                         onPress={() => this.openPicker()} >
-                        <Image source={{ uri: this.state.image }} style={styles.img} resizeMode='cover' />
+                        <Image source={{ uri: this.state.FoodImage }} style={styles.img} resizeMode='cover' />
                     </TouchableOpacity>
                     <TextInput
+                        value = {this.state.FoodName}
                         style={styles.around}
                         placeholder='Food Name'
                         onChangeText={(FoodName) => { this.setState({ FoodName }) }}
                     />
                     <TextInput style={styles.around}
+                    value = {this.state.FoodPrice}
                         placeholder='Food Price'
                         onChangeText={(FoodPrice) => { this.setState({ FoodPrice }) }} />
                     {/* <TextInput placeholder='Food Type' onChangeText={(FoodType) => { this.setState({ FoodType }) }} /> */}
@@ -154,6 +157,7 @@ export class Manager extends Component {
                     </View>
 
                     <TextInput
+                    value = {this.state.FoodDescription}
                         multiline={true}
                         textAlignVertical='top'
                         placeholder='Food Description'
@@ -172,7 +176,7 @@ export class Manager extends Component {
                             style={styles.button} onPress={
                                 () => { this.CheckPush() }
                             }>
-                                <Text style={styles.buttonText}>Add Food :D</Text>
+                                <Text style={styles.buttonText}>Save :D</Text>
                             </TouchableOpacity>
                         )}
                 </View>
@@ -219,4 +223,4 @@ const styles = StyleSheet.create({
          color: 'white',
           padding: 8 }
 })
-export default Manager
+export default EditFood

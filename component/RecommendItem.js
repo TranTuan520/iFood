@@ -27,11 +27,11 @@ const RecommendItem = () => {
                     resizeMode='cover' />
             </View>
             <View style={{ marginStart: 8 }}>
-                <Text style={{ ...FONTS.h2 }}>Thịt chó luộc cơm mẻ</Text>               
+                <Text style={{ fontSize: 22 }}>Thịt chó luộc cơm mẻ</Text>               
             </View>
 
             <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                <Text style={{ ...FONTS.h2, marginStart: 8, color:'gray' }}>$ 90.00</Text>
+                <Text style={{ fontSize: 22, marginStart: 8, color:'gray' }}>$ 90.00</Text>
                 {/* button */}
                 <View style = {{flexDirection:'row'}}>
                     <TouchableOpacity style = {{marginStart: 20}} >

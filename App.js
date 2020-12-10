@@ -18,26 +18,27 @@ import ChangeInfo from './screens/ChangeInfo'
 import AddCatgory from './screens/Manager/AddCategory'
 import FoodByCategory from "./screens/FoodByCategory";
 import FoodManager from './screens/Manager/FoodManager'
+import EditFood from './screens/Manager/EditFood'
 const Stack = createStackNavigator();
 const App = () => {
   return (
-    <NavigationContainer >
+    <NavigationContainer >  
       <Stack.Navigator
         screenOptions={{
           headerShown: false
         }}
-        initialRouteName={'Managers'}
+        initialRouteName={'Home'}
       >
       {/* Tabs */}
         <Stack.Screen name="Home" component={Tabs} />
         <Stack.Screen name = "FoodByCategory" component = {FoodByCategory}/>
         <Stack.Screen name = 'FoodDetail' component = {FoodDetail}/> 
         <Stack.Screen name = 'Login' component = {Login}/>
-        <Stack.Screen name = 'Signup' component = {Signup}/>
-        <Stack.Screen name = 'Manager' component = {index}/>
+        <Stack.Screen name = 'Signup' component = {Signup}/>        
         <Stack.Screen name = 'Profile' component = {Profile}/>    
         <Stack.Screen name = 'ChangeInfo' component = {ChangeInfo}/>      
         <Stack.Screen name = 'Managers' component = {Managers}/>
+        <Stack.Screen name  = 'EditFood' component = {EditFood}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

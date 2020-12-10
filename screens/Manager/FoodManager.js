@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View, Image, TouchableOpacity, FlatList, Dimensions, ScrollView } from 'react-native'
+import { Text, View, Image, TouchableOpacity, FlatList, Dimensions,
+    TextInput,  ScrollView, Modal, TouchableWithoutFeedback , FontAwesome, StyleSheet} from 'react-native'
 import database from '@react-native-firebase/database'
 import RebderFood from '../../component/RenderFood'
 import RenderFood from '../../component/RenderFood'
@@ -16,7 +17,9 @@ export class FoodManager extends Component {
             Foods: [],
             Categories: [],
             SelectList: [],
-            CatName: ''
+            CatName: '',
+            visible: false,
+            CatDelKey: ''
         }
     }
 
@@ -62,8 +65,7 @@ export class FoodManager extends Component {
         })
     }
 
-    onCheck = (index) => {
-
+    onLongPressCheck = (index) => {
         const Data = this.state.SelectList;
         if (Data.includes(index)) {
             Data.splice(Data.indexOf(index), 1);
@@ -74,20 +76,19 @@ export class FoodManager extends Component {
             this.setState({ SelectList: Data })
         }
     }
-    onCheckOnPress = (index) => {
+    onPressCheck = (item) => {
         const Data = this.state.SelectList;
-
-        if (Data.includes(index)) {
-            Data.splice(Data.indexOf(index), 1);
+        if (Data.includes(item.key)) {
+            Data.splice(Data.indexOf(item.key), 1);
             this.setState({ SelectList: Data })
         }
         else {
             if (this.state.SelectList.length > 0) {
-                Data.push(index);
+                Data.push(item.key);
                 this.setState({ SelectList: Data })
             }
             else {
-                alert('press F')
+               this.props.navigation.navigate('EditFood', {food: item})
             }
         }
     }
@@ -102,17 +103,17 @@ export class FoodManager extends Component {
             <TouchableOpacity
                 activeOpacity={0.9}
                 onLongPress={() => {
-                    this.onCheck(index)
-                    console.log(this.state.SelectList.includes(index))
+                    this.onLongPressCheck(item.key)
+                    console.log(this.state.SelectList.includes(item.key))
                     //this.setState (this.state); 
                 }}
                 onPress={() => {
-                    this.onCheckOnPress(index)
+                    this.onPressCheck( item)
                 }}
                 style={{
                     height: 80,
                     flexDirection: 'row',
-                    backgroundColor: this.state.SelectList.includes(index) ? 'tomato' : 'white',
+                    backgroundColor: this.state.SelectList.includes(item.key) ? 'tomato' : 'white',
                     borderRadius: 6,
                     marginVertical: 2,
                     alignItems: 'center',
@@ -121,7 +122,7 @@ export class FoodManager extends Component {
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Image source={{ uri: item.value.FoodImage }} style={{ width: 70, height: 70, borderRadius: 8, marginStart: 4, }} />
                     <View style={{ marginStart: 4 }}>
-                        <Text style={{ fontSize: 18 }}>
+                        <Text style={{ fontSize: 16 }}>
                             {item.value.FoodName}
                         </Text>
                         <Text style={{ fontSize: 14, color: 'gray' }}>
@@ -133,19 +134,47 @@ export class FoodManager extends Component {
                     </View>
                 </View>
                 <TouchableOpacity
-                    onPress={() => { alert('more option :D') }}
+                    onPress={() => {
+                        alert('show more')
+                    }}
                     style={{ width: 30, height: 30, }}>
                     <Icon name='ellipsis-v' size={22} color='tomato' />
                 </TouchableOpacity>
             </TouchableOpacity>
         )
     }
+
+    removeFoods = async () => {
+        //alert(this.state.SelectList.length)
+        if (this.state.SelectList.length == 0) {
+            alert("??????")
+        }
+        else {
+
+            await this.state.SelectList.forEach(key => {
+                database().ref(`/Food/${key}`).remove();
+            })
+            this.setState({ listSelected: [] })
+        }
+    }
+
+    removeCategory= async ()=>{
+        await database().ref(`/Category/${this.state.CatDelKey}`).remove();
+        this.setState({CatDelKey:''})
+        this.setState({visible: false})
+        alert('deteted!');
+    }
     renderItemCategory = ({ item }) => {
         return (
             <TouchableOpacity
+                onLongPress={() => {
+                    this.setState({CatDelKey: item.key})
+                    this.setState({ visible: true })
+                }}
                 onPress={() => {
-                    this.setState({SelectList:[]})
-                    this.setState({ CatName: item.value.CategoryName })}}
+                    this.setState({ SelectList: [] })
+                    this.setState({ CatName: item.value.CategoryName })
+                }}
                 activeOpacity={0.9}
                 style={{
                     width: 60, height: 30, justifyContent: 'center', alignItems: 'center',
@@ -162,15 +191,15 @@ export class FoodManager extends Component {
         return (
             <View style={{
                 width: 70,
-                backgroundColor: '#ffff',
-                marginVertical: 4,
+                backgroundColor: '#fffff',
+                marginBottom: 4,
                 marginHorizontal: 2,
                 alignItems: 'center',
 
             }}>
                 {/* option */}
 
-                <View style={{ justifyContent: 'flex-end', marginBottom: 16 }}>
+                <View style={{ justifyContent: 'flex-end', marginVertical: 8 }}>
                     {/* Button select all */}
                     <TouchableOpacity
                         activeOpacity={0.9}
@@ -191,7 +220,7 @@ export class FoodManager extends Component {
                     </TouchableOpacity>
                     {/* Button Delete */}
                     <TouchableOpacity
-
+                        onPress={() => this.removeFoods()}
                         activeOpacity={0.9}
                         style={{
                             width: 60, height: 30, justifyContent: 'center', alignItems: 'center',
@@ -207,7 +236,7 @@ export class FoodManager extends Component {
                 <View style={{ flex: 1, width: 68, backgroundColor: '#ffff', borderRadius: 6, elevation: 2, alignItems: 'center', }}>
                     <TouchableOpacity
                         onPress={() => {
-                            this.setState({SelectList: []})
+                            this.setState({ SelectList: [] })
                             this.setState({ CatName: '' })
                         }}
                         activeOpacity={0.9}
@@ -230,11 +259,41 @@ export class FoodManager extends Component {
             </View>
         )
     }
+    Panel = () =>{
+       return(
+           <Modal
+               visible={this.state.visible}
+               animationType='fade'
+               transparent={true}>
+               <TouchableWithoutFeedback onPress={() => this.setState({ visible: false })}>
+                   <View style={{ width: width, height: height, elevation: 4, backgroundColor: 'rgba(0,0,0,0.5)', alignItems: 'center', justifyContent: 'center' }}>
+                       <TouchableWithoutFeedback>
+                           <View style={{
+                               width: 250, height: 100, backgroundColor: '#ffff', borderRadius: 8, justifyContent: 'center', alignItems: 'center'
+                           }}>
+                               <Text style={{ fontSize: 22 }}>Delete it?</Text>
+                               <View style={{ flexDirection: 'row', marginTop: 16 }}>
+                                   <TouchableOpacity style={styles.button} 
+                                   onPress = {()=>this.removeCategory()} >
+                                       <Text style={styles.buttonText}>Cornfirm</Text>
+                                   </TouchableOpacity>
+                                   <TouchableOpacity style={styles.button} 
+                                   onPress = {()=>this.setState({visible:false})}>
+                                       <Text style={styles.buttonText}>Cancel</Text>
+                                   </TouchableOpacity>
+                               </View>
+                           </View>
+                       </TouchableWithoutFeedback>
+                   </View></TouchableWithoutFeedback>
+           </Modal>
+       )
+    }
+
 
     render = () => {
         return (
             <View style={{ marginHorizontal: 4, flex: 1, flexDirection: 'row' }}>
-
+               {this.Panel()}
                 <View style={{ flex: 1, width: 350, }}>
                     <FlatList data={this.getFoodByCategory(this.state.CatName)}
                         //extraData={this.state.SelectList}
@@ -249,6 +308,24 @@ export class FoodManager extends Component {
         )
     }
 }
+
+
+const styles = StyleSheet.create({
+    button:{
+        width: 100,
+        height:30,
+        backgroundColor:'tomato',
+        borderRadius: 4,
+        elevation: 2,
+        alignItems:'center',
+        justifyContent:'center',
+        marginHorizontal: 4
+    },
+    buttonText:{
+        fontSize: 18,
+        color: 'white'
+    }
+})
 
 export default FoodManager
 

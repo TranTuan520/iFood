@@ -16,7 +16,7 @@ export default function RenderFood ({navigation, Foods}) {
         <View style={{
                    flex: 1,
                    flexDirection: 'row',
-                   width: 420,
+                   width: 400,
                    height: 100,
                    backgroundColor: '#ffff',
                    alignItems: 'center',
@@ -37,11 +37,11 @@ export default function RenderFood ({navigation, Foods}) {
             <View style={{                             
                 height: 25,               
             }}>                
-                    <Text numberOfLines ={2} style={{ fontSize: 20, flex: 1, elevation: 4 }}>{item.value.FoodName}</Text>               
+                    <Text numberOfLines ={2} style={{ fontSize: 18, flex: 1, elevation: 4 }}>{item.value.FoodName}</Text>               
             </View >
             {/* Description hay cai gi do */}
             <View style={{ height: 30, flex: 1, marginTop: 6 }}>
-            <Text numberOfLines={1} style={{ ...FONTS.h3, color: 'gray' }}>{item.value.FoodDescription}</Text>
+            <Text numberOfLines={1} style={{fontSize: 16, color: 'gray' }}>{item.value.FoodDescription}</Text>
             </View>
             {/* Price && Buttons */}
             <View style={{
@@ -49,7 +49,7 @@ export default function RenderFood ({navigation, Foods}) {
                 alignItems: 'flex-end'
             }}>
                 {/* price */}
-                <Text style={{ ...FONTS.h2, color: 'gray', alignItems: 'center', flex: 1, alignItems: 'flex-start' }}>$ {item.value.FoodPrice}</Text>
+                <Text style={{ fontSize: 16, color: 'gray', alignItems: 'center', flex: 1, alignItems: 'flex-start' }}>$ {item.value.FoodPrice}</Text>
                 {/* Button Add to cart */}
                 <TouchableOpacity activeOpacity = {0.9}>
                     <View style={{
