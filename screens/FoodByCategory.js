@@ -4,7 +4,7 @@ import database from "@react-native-firebase/database";
 import RenderFood  from '../component/RenderFood'
 const {width, height} = Dimensions.get('window')
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
+import firestore from '@react-native-firebase/firestore'
 export class FoodByCategory extends Component {
      constructor(props){
          super(props)
@@ -17,28 +17,31 @@ export class FoodByCategory extends Component {
      }
 
 
-    getAllFood = async ()=>{
-        await database().ref('/Food/').once('value').then(snapshot=>{         
-         const Food = []         
-         snapshot.forEach((food)=>
-         {         
-            Food.push( food._snapshot)              
-         })
-         this.setState({Foods: Food})         
-      })
+    getAllFood = ()=>{
+        firestore()
+      .collection('Food')
+      .onSnapshot((documentSnapshot) => {
+        const Foods = [];
+        documentSnapshot.forEach((e) => {
+          Foods.push(e);
+        });
+        this.setState({Foods});
+        console.log(Foods);
+      });
     }
-    getAllCategory = async () =>{
-        await database().ref('/Category/').once('value').then(snapshot=>{
-            const Category = []
-            snapshot.forEach((category)=>{
-                Category.push(category._snapshot);
-            })
-            this.setState({Categories:Category})
-            console.log(Category)
-         })                  
+    getAllCategory = () =>{
+        firestore()
+        .collection('Category')
+        .onSnapshot((snapshot) => {
+          const Categories = [];
+          snapshot.forEach((e) => {
+            Categories.push(e);
+          });
+          this.setState({Categories});
+        });             
     }
     getFoodByCategory = (CatName) =>{
-        return this.state.Foods.filter((item) => ( item.value.FoodType === CatName ))        
+        return this.state.Foods.filter((item) => ( item._data.FoodType === CatName ))        
     }
 
     componentDidMount(){
@@ -48,18 +51,18 @@ export class FoodByCategory extends Component {
     renderCategory = ({ item }) =>{
         return (
             <TouchableOpacity  activeOpacity = {0.8}
-                onPress={()=> this.setState({SelectedCat: item.value.CategoryName})}
+                onPress={()=> this.setState({SelectedCat: item._data.CategoryName})}
                 style={{
                     height:  30,
                     borderRadius: 6,
                     marginHorizontal: 4,
                     alignItems: 'center',
-                    backgroundColor: this.state.SelectedCat === item.value.CategoryName? 'tomato': '#fff',
+                    backgroundColor: this.state.SelectedCat === item._data.CategoryName? 'tomato': '#fff',
                     padding: 6,
                     elevation: 8,
                     justifyContent: 'center'
                 }}>
-                <Text style={{ fontSize: 14, color: this.state.SelectedCat === item.value.CategoryName ? '#ffff': 'black' }}>{item.value.CategoryName}</Text>
+                <Text style={{ fontSize: 14, color: this.state.SelectedCat === item._data.CategoryName ? '#ffff': 'black' }}>{item._data.CategoryName}</Text>
             </TouchableOpacity>
         )
     }
@@ -83,7 +86,7 @@ export class FoodByCategory extends Component {
                     />
                 </View>
                 <View style={{ flex: 1, alignItems:'center' }}>
-                    <RenderFood navigation={this.props.navigation} Foods={this.getFoodByCategory(this.state.SelectedCat)} />
+                    <RenderFood navigation={this.props.navigation} Foods={this.getFoodByCategory(this.state.SelectedCat)}  />
                 </View>
                
             </View>

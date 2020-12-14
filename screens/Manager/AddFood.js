@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
-    Text, View, ImageBackground, Image,
-    TextInput, TouchableOpacity, Dimensions,
+    Text, View, Image,
+    TextInput, TouchableOpacity,
     Alert, ScrollView, Modal, StyleSheet
 } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
@@ -9,18 +9,17 @@ import { Picker } from '@react-native-picker/picker';
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage'
 
-
 import * as Progress from 'react-native-progress';
 import ImagePicker from "react-native-image-crop-picker";
 
-import { Button } from 'react-native-paper'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { COLORS, FONTS } from '../../constants/theme'
-const { width, height } = Dimensions.get('window')
+//using firebase firestore
 
 
+import firestore from '@react-native-firebase/firestore';
 
-const ref = database().ref('/Food/');
+
+const FoodDocument = firestore()
+  .collection('Food');
 
 export class Manager extends Component {
     state = {
@@ -34,10 +33,25 @@ export class Manager extends Component {
         transferred: 0,
         Categories: [],
         CatSelected: null,
-
     }
     componentDidMount = () => {
         this.getCategory()
+    }
+
+    AddToStore = async()=>{
+        await this.uploadImage();
+        firestore()
+        .collection('Food')
+        .add({
+            FoodName: this.state.FoodName,
+            FoodPrice: this.state.FoodPrice,
+            FoodType: this.state.FoodType,
+            FoodDescription: this.state.FoodDescription,
+            FoodImage: this.state.FoodImage,
+        })
+        .then(() => {
+          console.log('User added!');
+        });
     }
 
     AddFood = async () => {
@@ -49,7 +63,6 @@ export class Manager extends Component {
             FoodType: this.state.FoodType,
             FoodDescription: this.state.FoodDescription,
             FoodImage: this.state.FoodImage,
-
         })
             .then(() => console.log('Data set.'));
     }
@@ -60,7 +73,7 @@ export class Manager extends Component {
                 Categories.push(cat._snapshot)
             })
             this.setState({ Categories })
-            console.log(this.state.Categories)
+            //console.log(this.state.Categories)
         })
     }
     //
@@ -102,12 +115,7 @@ export class Manager extends Component {
         this.setState({ image: null })
         console.log(this.state.uploading)
     }
-    CheckPush = ()=>{
-        console.log("name:"+this.state.FoodName +"\nPrice:"+this.state.FoodPrice
-        +"\nPrice:"+this.state.FoodPrice
-        +"\nPrice:"+this.state.FoodType
-        +"\nPrice:"+this.state.FoodDescription
-        +"\nPrice:"+this.state.image)
+    CheckPush = ()=>{       
         if(this.state.FoodName == '' 
         || this.state.FoodPrice == '' 
         || this.state.FoodType == '' 
@@ -117,7 +125,7 @@ export class Manager extends Component {
               Alert.alert('!', 'Please enter enough information')
                return 
            }
-            return this.AddFood()
+            return this.AddToStore()
     }
     render() {
         return (

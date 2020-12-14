@@ -8,6 +8,7 @@ import ImagePicker from "react-native-image-crop-picker";
 import database from "@react-native-firebase/database";
 import storage from '@react-native-firebase/storage';
 import { COLORS, FONTS } from '../../constants/theme';
+import firestore from '@react-native-firebase/firestore'
 
 export class AddCategory extends Component {
     state = {
@@ -38,7 +39,7 @@ export class AddCategory extends Component {
                         ) :
                         (
                             <TouchableOpacity style={styles.button} onPress={
-                                () => { this.uploadCategory() }
+                                () => { this.uploadCategoryToStore() }
                             }>
                                 <Text style={styles.buttonText}>Add Category :D</Text>
                             </TouchableOpacity>
@@ -76,6 +77,15 @@ export class AddCategory extends Component {
         database().ref('/Category').push().set({
             CategoryName: this.state.CategoryName,
             CategoryImage: this.state.CategoryImage
+        })
+    }
+    uploadCategoryToStore = async()=>{
+        await  this.uploadImage();
+        firestore().collection('Category').add({
+            CategoryName: this.state.CategoryName,
+            CategoryImage: this.state.CategoryImage
+        }).then(()=>{
+            
         })
     }
 

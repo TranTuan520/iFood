@@ -6,9 +6,9 @@ import {
 } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 
-import database from '@react-native-firebase/database';
+import database, { firebase } from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage'
-
+import firestore from '@react-native-firebase/firestore'
 
 import * as Progress from 'react-native-progress';
 import ImagePicker from "react-native-image-crop-picker";
@@ -22,47 +22,46 @@ export class EditFood extends Component {
         FoodImage: '',
         FoodType: '',
         FoodDescription: '',
+        FoodID: '',
         image: null,
         uploading: null,
         transferred: 0,
         Categories: [],
         CatSelected: null,
-
     }
     componentDidMount = () => {
         this.getCategory()
-        console.log(`food: ${(this.props.route.params.food)}`)
-        this.setState({FoodName: this.Food.value.FoodName})
-        this.setState({FoodDescription: this.Food.value.FoodDescription})
-        this.setState({FoodPrice: this.Food.value.FoodPrice})
-        this.setState({FoodType: this.Food.value.FoodType})
-        this.setState({FoodImage: this.Food.value.FoodImage})   
-        
-        
+        console.log( this.props.route.params.food)
+        this.setState({FoodName: this.Food._data.FoodName})
+        this.setState({FoodDescription: this.Food._data.FoodDescription})
+        this.setState({FoodPrice: this.Food._data.FoodPrice})
+        this.setState({FoodType: this.Food._data.FoodType})
+        this.setState({FoodImage: this.Food._data.FoodImage})   
+        this.setState({FoodID: this.Food.id})         
     }
 
     AddFood = async () => {
-        await this.uploadImage();
-        const ref = database().ref('/Food').push();
-        ref.set({
+            if(this.state.image != null)
+                await this.uploadImage()
+            firestore().collection('Food').doc(this.state.FoodID ).update({
             FoodName: this.state.FoodName,
             FoodPrice: this.state.FoodPrice,
             FoodType: this.state.FoodType,
             FoodDescription: this.state.FoodDescription,
             FoodImage: this.state.FoodImage,
-
         })
-            .then(() => console.log('Data set.'));
+            .then(() => Alert.alert('yeahhhh', 'updated<3'));
     }
-    getCategory = async () => {
-        await database().ref('/Category/').on('value', snapshot => {
-            const Categories = []
-            snapshot.forEach(cat => {
-                Categories.push(cat._snapshot)
-            })
-            this.setState({ Categories })
-            console.log(this.state.Categories)
-        })
+    getCategory =  () => {
+        firestore()
+      .collection('Category')
+      .onSnapshot((snapshot) => {
+        const Categories = [];
+        snapshot.forEach((e) => {
+          Categories.push(e);
+        });
+        this.setState({Categories});
+      });
     }
     //
     openPicker = () => {
@@ -103,17 +102,12 @@ export class EditFood extends Component {
         this.setState({ image: null })
         console.log(this.state.uploading)
     }
-    CheckPush = ()=>{
-        console.log("name:"+this.state.FoodName +"\nPrice:"+this.state.FoodPrice
-        +"\nPrice:"+this.state.FoodPrice
-        +"\nPrice:"+this.state.FoodType
-        +"\nPrice:"+this.state.FoodDescription
-        +"\nPrice:"+this.state.image)
+    CheckPush = ()=>{       
         if(this.state.FoodName == '' 
         || this.state.FoodPrice == '' 
         || this.state.FoodType == '' 
-        || this.state.FoodDescription == '' 
-        || this.state.image == null)
+        || this.state.FoodDescription == ''         
+        )
            {                            
               Alert.alert('!', 'Please enter enough information')
                return 
@@ -149,8 +143,8 @@ export class EditFood extends Component {
                             }>
                             {this.state.Categories.map(item => (
                                 <Picker.Item
-                                    label={item.value.CategoryName}
-                                    value={item.value.CategoryName}
+                                    label={item._data.CategoryName}
+                                    value={item._data.CategoryName}
                                     key={item.key} />
                             ))}
                         </Picker>
