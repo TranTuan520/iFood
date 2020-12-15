@@ -252,7 +252,7 @@ export class FoodManager extends Component {
           Foods.push(e);
         });
         this.setState({Foods});
-        console.log(Foods);
+        
       });
 
     // console.log(FOOD)
@@ -279,6 +279,7 @@ export class FoodManager extends Component {
     //this.getAllCategory();
     this.getCategoryFromStore();
     this.getFoodFromStore();
+    
   }
   //   get data from realtime(not use)
   getAllFood = () => {

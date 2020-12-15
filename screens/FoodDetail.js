@@ -13,8 +13,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {COLORS, FONTS} from '../constants/theme';
 const {width, height} = Dimensions.get('window');
 import database, {firebase} from '@react-native-firebase/database';
+import firestore from '@react-native-firebase/firestore'
 export class FoodDetail extends Component {
   Food = this.props.route.params.food;
+  state = {
+    Cart: []
+  }
+
+
   renderHeader() {
     return (
       <View
@@ -132,7 +138,7 @@ export class FoodDetail extends Component {
           </View>
 
           <TouchableOpacity
-            onPress={() => this.addToCart()}
+            onPress={() => this.addToCart(this.Food.id)}
             activeOpacity={0.8}
             style={{
               flex: 1,
@@ -148,19 +154,28 @@ export class FoodDetail extends Component {
       </View>
     );
   }
-  addToCart = () => {
-    database()
-      .ref(`/Cart/${firebase.auth().currentUser.uid}/${this.Food.key}`)
-      .push({
-        quantity: 1,
-      })
-      .then(() => {
-        ToastAndroid.show(this.Food.key, ToastAndroid.SHORT);
-      });
-  };
+  getCart= ()=>{
+    firestore().collection('User').doc(firebase.auth().currentUser.uid).onSnapshot(snapshot=>{     
+     this.setState({Cart: snapshot._data.Cart})
+    })
+        
+  }
+  addToCart = (foodID) => {
+    const Cart = this.state.Cart
+   if(this.state.Cart.filter(cart=>cart.foodID === foodID).length == 0 )
+       {
+           Cart.push({foodID: foodID,quantity: 1})
+           firestore().collection('User').doc(firebase.auth().currentUser.uid).update({
+             Cart: Cart
+           }).then(()=>console.log(this.state.Cart))
+       }
+       else{
+         ToastAndroid.show('ngu lz', ToastAndroid.LONG)
+       }
+ };
+ 
   componentDidMount(){
-    
-console.log(this.Food)
+this.getCart()
   }
   render() {
     return (

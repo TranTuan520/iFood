@@ -27,15 +27,21 @@ export default class Home extends Component {
     this.state = {      
       Foods: [],
       Categories: [],      
-      user: firebase.auth().currentUser
+      user: firebase.auth().currentUser, 
+      Cart: new Map()
     };
     //alert('current user: '+ JSON.stringify(this.state.user))
+  }
+  getCart = ()=>{
+    firestore().collection('Cart').doc(firebase.auth().currentUser.uid).onSnapshot(snapshot=>{       
+          this.setState({Cart: snapshot._data})          
+    })    
   }
   
   getUserInfo = ()=>{
     firestore().collection('User').doc(this.state.user.uid).onSnapshot(user=>{
       this.setState({user:user._data})
-      console.log(this.state.user)
+      // console.log(this.state.user)
     })
         
   }
@@ -47,8 +53,7 @@ export default class Home extends Component {
       documentSnapshot.forEach((e) => {
         Foods.push(e);
       });
-      this.setState({Foods});
-      
+      this.setState({Foods});      
     });
   };
   getAllCategory =  () => {
@@ -66,7 +71,9 @@ export default class Home extends Component {
     this.getUserInfo()
     // console.log('user ne ' + JSON.stringify(this.state.user));
     this.getAllFood();
-    this.getAllCategory();   
+    this.getAllCategory();  
+    this.getCart(); 
+   // console.log(this.state.Foods);
   };
 
   renderHeader1 = () => {
@@ -171,7 +178,7 @@ export default class Home extends Component {
       <View
         style={
           {
-            // height: 190
+             height: 160
           }
         }>
         <RenderCategory
@@ -217,6 +224,7 @@ export default class Home extends Component {
         <RenderFood
           navigation={this.props.navigation}
           Foods={this.state.Foods}
+          // Cart = {this.state.Cart}
         />
       </View>
     );

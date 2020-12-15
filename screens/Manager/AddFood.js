@@ -97,7 +97,7 @@ export class Manager extends Component {
         })
         const fileName = this.state.image.substring(this.state.image.lastIndexOf('/') + 1);
         const task = storage().ref(`/ImageFood/${fileName}`).putFile(this.state.image);
-
+    
         //
         task.on('state_changed', snapshot => {
             this.setState({ transferred: Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000 })

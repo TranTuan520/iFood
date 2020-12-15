@@ -25,6 +25,7 @@ export class Signup extends Component {
   };
   setInfo = (user)=>{      
       firestore().collection('User').doc(`${user.uid}`).set({
+          Cart: [],
           email: this.state.email,
           name: this.state.fullName,         
       })

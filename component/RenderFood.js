@@ -1,13 +1,14 @@
 import React, { Component, useEffect, useState } from 'react'
-import { Text, View, Dimensions, Image, TouchableOpacity, FlatList,StyleSheet } from 'react-native'
+import { Text, View, Dimensions, Image, TouchableOpacity, FlatList,StyleSheet, ToastAndroid } from 'react-native'
 import Button from '../component/Button'
 import firestore from '@react-native-firebase/firestore'
 import database, {firebase} from '@react-native-firebase/database'
 import { COLORS, FONTS } from '../constants/theme'
+import Cart from '../screens/Cart'
 const { width, height } = Dimensions.get('window')
 export class RenderFood extends Component {
   state = {
-    Cart: new Map()
+    Cart: []
   }
   render() {
     return (
@@ -17,12 +18,14 @@ export class RenderFood extends Component {
         keyExtractor = {item=>item.id}
         showsVerticalScrollIndicator = {false}
         extraData = {this.props.Foods}
+        removeClippedSubviews      
         >            
         </FlatList>
     )
   }
   componentDidMount(){
     this.getCart()
+   
   }
 
   RenderItem = ({item}) => {    
@@ -33,14 +36,12 @@ export class RenderFood extends Component {
           this.props.navigation.navigate('FoodDetail', {food: item});
         }}>
         <View style={styles.containerFood}>
-          {/* image */}
-  
           <Image
             source={{uri: item._data.FoodImage}}
             style={styles.imgFood}
             resizeMode="cover"
+            resizeMethod = 'resize'
           />
-  
           <View style={styles.containerFood1}>
             {/* title and price */}
             <View
@@ -51,18 +52,16 @@ export class RenderFood extends Component {
                 {item._data.FoodName}
               </Text>
             </View>
-            {/* Description hay cai gi do nhu la rating */}
             <Text numberOfLines={1} style={styles.textDes}>
               {item._data.FoodDescription}
-            </Text>
-  
+            </Text>  
             {/* Price && Buttons */}
             <View style={styles.foodBottom}>
               {/* price */}
               <Text style={styles.textPrice}>$ {item._data.FoodPrice}</Text>
               {/* Button Add to cart */}
               <TouchableOpacity
-                onPress={() => addToCart(item.id)}
+                onPress={() => this.addToCart(item.id)}
                 activeOpacity={0.9}>
                 <View style={styles.button}>
                   <Text style={styles.textButton}>Add to cart</Text>
@@ -81,22 +80,25 @@ export class RenderFood extends Component {
     );
   };
 
- addToCart = (foodKey) => {
-  firestore()
-    .collection('Cart').doc(firebase.auth().currentUser.uid)
-    .set({              
-     Cart: this.state.Cart        
-    })
-    .then(() => {
-      ToastAndroid.show(foodKey, ToastAndroid.SHORT);
-    });
+ addToCart = (foodID) => {
+   const Cart = this.state.Cart
+  if(this.state.Cart.filter(cart=>cart.foodID === foodID).length == 0 )
+      {
+          Cart.push({foodID: foodID,quantity: 1})
+          firestore().collection('User').doc(firebase.auth().currentUser.uid).update({
+            Cart: Cart
+          }).then()
+      }
+      else{
+        ToastAndroid.show('ngu lz', ToastAndroid.LONG)
+      }
 };
 
-  getCart = ()=>{
-  firestore().collection('Cart').doc(firebase.auth().currentUser.uid).onSnapshot(Snapshot=>{
-    console.log(Snapshot.data())
-  })
-}
+getCart= ()=>{
+    firestore().collection('User').doc(firebase.auth().currentUser.uid).onSnapshot(snapshot=>{     
+     this.setState({Cart: snapshot._data.Cart})
+    })      
+  }
 
 }
 
@@ -107,8 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 400,
     height: 100,
-    backgroundColor: '#ffff',
-    alignItems: 'center',
+    backgroundColor: '#ffff',    
     borderWidth: 2,
     padding: 4,
     marginVertical: 2,

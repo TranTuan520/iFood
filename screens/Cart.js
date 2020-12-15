@@ -1,76 +1,148 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Swiper from 'react-native-swiper';
-import {COLORS, FONTS} from '../constants/theme';
-
+import {Text, View, TouchableOpacity, StyleSheet, FlatList, Alert} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 import database, {firebase} from '@react-native-firebase/database';
-import auth from '@react-native-firebase/auth'
-import RenderItem from '../component/RenderFoodCartScreen';
+import RenderFood from '../component/RenderFood';
+import RenderItem from '../component/RenderFoodCartScreen'
 export class Cart extends Component {
-    state = {
-        Products: [],
-        Foods: [],
-        total: 0,
-        userID: firebase.auth().currentUser.uid
-    }
-    getFoodByID = async(productKey)=>{
-        await database()
-        .ref('/Food').equalTo(productKey)
-        .once('value')
-        .then((snapshot) => {
-          console.log( snapshot._snapshot.value)
-          const Foods = [];
-        //   snapshot.forEach((food) => {
-        //     Foods.push(food._snapshot);
-        //   });
-        //   this.setState({Foods});
-        //  console.log(this.state.Foods)
+  state = {
+    Products: [],
+    Foods: [],
+    total: 0,
+    userID: firebase.auth().currentUser.uid,
+    Cart: [],
+    FoodInCart: [],
+    totalPrice: 0,
+  };
+  getAllFood = () => {
+    firestore()
+      .collection('Food')
+      .onSnapshot((documentSnapshot) => {
+        const Foods = [];
+        documentSnapshot.forEach((e) => {
+          Foods.push(e);
         });
+        this.setState({Foods});
+        this.getFoodInCart();
+        this.totalPrice();
+      });
+  };
+
+  productPlus = (FoodID)=>{
+    var Cart = this.state.Cart;
+    for(var i =0;i< Cart.length; i++){
+      if(Cart[i].foodID === FoodID)
+          {
+            Cart[i].quantity += 1;
+            break;
+          }
     }
-    getCart = async()=>{
-      //  console.log(firebase.auth().currentUser.uid)
-        await database().ref(`/Cart/${firebase.auth().currentUser.uid}/`).on('value', snapshot => {
-            const Products = []
-            snapshot.forEach(pro => {
-               {                   
-                    Products.push(pro._snapshot)}
-            })
-            this.setState({ Products })
-            console.log(this.state.Products)
-        })
-    }
-    totalPrice = ()=>{
-        var total = 0;
-        this.state.Products.forEach(product=>{
-            
-        })
-    }
-    componentDidMount(){
-        this.getCart()
-        this.getFoodByID('-MNj-iIZR1ZtSUzSC3j4');
-        
-    }
+   // this.setState({Cart})
+    firestore().collection('User').doc(firebase.auth().currentUser.uid).update({
+      Cart: Cart
+    })
+  }
+
+  productMinus = (FoodID)=>{
+   var Cart = this.state.Cart;
+   for(var i =0; i< Cart.length; i++)
+   {
+    console.log('loop')
+    if(Cart[i].foodID === FoodID)
+      if(Cart[i].quantity > 1)
+      {  Cart[i].quantity -= 1;
+          break;
+      }            
+      else            
+         { 
+          Cart = this.state.Cart.filter(i=>i.foodID != FoodID)            
+          break ;
+         }
+   }    
+    firestore().collection('User').doc(firebase.auth().currentUser.uid).update({
+      Cart: Cart
+    })
+  }
+  removeProduct=(FoodID)=>{
+    const Cart = this.state.Cart.filter(i=>i.foodID != FoodID)    
+    firestore().collection('User').doc(firebase.auth().currentUser.uid).update({
+      Cart: Cart
+    })
+  }
+
+  getCart = () => {
+    firestore()
+      .collection('User')
+      .doc(firebase.auth().currentUser.uid)
+      .onSnapshot((snapshot) => {
+        this.setState({Cart: snapshot._data.Cart});
+        this.getFoodInCart();
+        this.totalPrice();
+      });
+  };
+  totalPrice = () => {
+    var totalPrice = 0;
+    this.state.FoodInCart.forEach((food) => {      
+      totalPrice += this.getQuantity(food.id) * food._data.FoodPrice;
+    });
+    this.setState({totalPrice});
+  };
+  getQuantity = (foodID) => {
+    var quantity = 0;
+    this.state.Cart.forEach((product) => {
+      if (product.foodID === foodID) quantity = product.quantity;
+    });
+    return quantity;
+  };
+  componentDidMount() {
+    this.getAllFood();
+    this.getCart();    
+  }
+  getFoodInCart = () => {
+    const FoodInCart = [];
+    this.state.Cart.forEach((product) => {
+      this.state.Foods.forEach((food) => {
+        if (product.foodID === food.id) FoodInCart.push(food);
+      });
+    });
+    this.setState({FoodInCart});
+  };
+  //clear
+  checkout=()=> {
+    firestore().collection('User').doc(firebase.auth().currentUser.uid).update({
+      Cart: []
+    }).then(()=>{
+      Alert.alert('yeahhhh', 'thanh toán thành công gòi nè')
+    })
+  }
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.containerPanel}>
-          <View
-            style={styles.panelStart}>
-            <Text style={styles.textPrice}>$ 69.00</Text>
+          <View style={styles.panelStart}>
+            <Text style={styles.textPrice}>$ {this.state.totalPrice}</Text>
             <Text style={[styles.textPrice, {fontSize: 16}]}>Total Price</Text>
           </View>
-          <TouchableOpacity activeOpacity={0.8} style={styles.containerButton}>
+          <TouchableOpacity
+            onPress={() => {        
+              this.checkout();                    
+            }}
+            activeOpacity={0.8}
+            style={styles.containerButton}>
             <Text style={styles.textButton}>Check out</Text>
           </TouchableOpacity>
         </View>
-        <RenderItem Foods = {this.state.Products} navigation = {this.props.navigation} />
+        <RenderItem
+          Foods={this.state.FoodInCart}
+          navigation={this.props.navigation}
+          getQuantity = {this.getQuantity}
+          productPlus = {this.productPlus}
+          productMinus = {this.productMinus}
+          removeProduct = {this.removeProduct}
+        />
       </View>
     );
   }
-
-
-
 }
 const styles = StyleSheet.create({
   containerButton: {
@@ -82,16 +154,18 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   textButton: {
-      fontSize: 22,
-       color: 'white'
-    },
+    fontSize: 22,
+    color: 'white',
+  },
   textPrice: {
-      fontSize: 18, 
-      color: 'white'},
+    fontSize: 18,
+    color: 'white',
+  },
   container: {
-      flex: 1, 
-      alignItems: 'center',
-       marginTop: 4},
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 4,
+  },
   containerPanel: {
     flexDirection: 'row',
     height: 60,
@@ -101,12 +175,12 @@ const styles = StyleSheet.create({
     elevation: 8,
     marginVertical: 2,
   },
-  panelStart:{
+  panelStart: {
     width: 90,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
 });
 
 export default Cart;
