@@ -67,19 +67,14 @@ export class RenderFood extends Component {
                   <Text style={styles.textButton}>Add to cart</Text>
                 </View>
               </TouchableOpacity>
-              {/* Button Order now */}
-              <TouchableOpacity activeOpacity={0.9}>
-                <View style={styles.button}>
-                  <Text style={styles.textButton}>Oder now</Text>
-                </View>
-              </TouchableOpacity>
+              {/* Button Order now */}             
             </View>
           </View>
         </View>
       </TouchableOpacity>
     );
   };
-
+ 
  addToCart = (foodID) => {
    const Cart = this.state.Cart
   if(this.state.Cart.filter(cart=>cart.foodID === foodID).length == 0 )

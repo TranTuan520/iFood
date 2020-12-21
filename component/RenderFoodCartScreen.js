@@ -7,11 +7,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback,        
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {COLORS, FONTS} from '../constants/theme';
-const {width, height} = Dimensions.get('window');
+
 export default class RenderItem extends Component {
   render() {
     return (

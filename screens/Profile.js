@@ -17,6 +17,11 @@ import firestore from '@react-native-firebase/firestore'
 export default class Profile extends Component {
   state = {
     user: firebase.auth().currentUser,
+    userEmail:'',
+    userFullName: '',
+    useraAddress:'',
+    userPhone:'',
+    userAvatar: '',
   };
   componentDidMount() {
     this.getUserInfo();
@@ -31,7 +36,7 @@ export default class Profile extends Component {
       <View style={styles.containerHeader}>
         {/* avatar */}
 
-        <Image source={require('../assets/avt.jpg')} style={styles.imgAvatar} />
+        <Image source={{uri: this.state.user.avatar}} style={styles.imgAvatar} />
         <FontAwesome
           name="angle-left"
           size={50}

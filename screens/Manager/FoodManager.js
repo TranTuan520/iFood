@@ -84,9 +84,11 @@ export class FoodManager extends Component {
       this.state.SelectList.forEach((key) => {      
         firestore().collection('Food').doc(key).delete().then(()=>{            
             alert('deleted!');
+            this.setState({SelectList: []})
          })
       });
     }
+    
   };
   // chua lam phan xoa food theo category
   removeCategory = () => {

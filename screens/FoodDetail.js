@@ -36,7 +36,7 @@ export class FoodDetail extends Component {
           name="angle-left"
           size={50}
           color="black"
-          style={{marginRight: 16}}
+          style={{marginRight: 16,  width: 42}}
           onPress={() => this.props.navigation.goBack()}
         />
         <Text numberOfLines={1} style={{fontSize: 22, width: width - 70}}>

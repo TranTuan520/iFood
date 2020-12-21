@@ -29,7 +29,7 @@ const tabs = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="NearBy"
         component={Maps}
         options={{
@@ -39,7 +39,7 @@ const tabs = () => {
             <FontAwesome name="location-arrow" color={color} size={24} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Cart"
         component={Cart}
