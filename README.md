@@ -1,6 +1,4 @@
-# admin account: 
-# username: admin
-# password: 1
+# admin 1
 ### 
 <img src = 'https://github.com/TranQuangTuan52/iFood/blob/master/scr/h.jpg' width = '250' />
 <img src = 'https://github.com/TranQuangTuan52/iFood/blob/master/scr/a9784cb8881979472008.jpg' width = '250' />
