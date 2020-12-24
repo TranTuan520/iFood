@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
+  Animated
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const RenderCategory = ({navigation, Categories, user}) => {
+const RenderCategory = ({navigation, Categories, spring}) => {
   RenderItem = ({item}) => {
     return (
       <TouchableOpacity
@@ -20,7 +21,7 @@ const RenderCategory = ({navigation, Categories, user}) => {
           })
         }
         style={styles.containerCategory}>
-        <Image source={{uri: item._data.CategoryImage}} style={styles.img} />
+        <Animated.Image source={{uri: item._data.CategoryImage}} style={[styles.img, {transform:[{scale: spring}] }]} />
         <Text numberOfLines={1} style={styles.categoryTitle}>
           {item._data.CategoryName}
         </Text>

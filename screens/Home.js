@@ -8,6 +8,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Animated
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
@@ -29,9 +30,19 @@ export default class Home extends Component {
       Categories: [],
       user: firebase.auth().currentUser,
       Cart: new Map(),
-      keyword: '', RandomFoods:[]
+      keyword: '', RandomFoods:[],
+      foodSpringValue: new Animated.Value(0.3),
+      bannerSpringValue: new Animated.Value(0.3),
+      categorySpringValue: new Animated.Value(0.3)
     };
     //alert('current user: '+ JSON.stringify(this.state.user))
+  }
+  springAnimation = (Ani)=>{
+    Animated.spring(Ani, {
+      toValue: 1,
+      friction: 5,
+      useNativeDriver: true
+    }).start()
   }
   getCart = () => {
     firestore()
@@ -72,6 +83,7 @@ export default class Home extends Component {
         });
         this.setState({Foods});
         this.randomFoods();
+        this.springAnimation(this.state.foodSpringValue)
       });
   };
   getAllCategory = () => {
@@ -83,10 +95,12 @@ export default class Home extends Component {
           Categories.push(cat);
         });
         this.setState({Categories});
+        this.springAnimation(this.state.categorySpringValue)
       });
   };
 
   componentDidMount = () => {
+    this.springAnimation(this.state.bannerSpringValue)
     this.getUserInfo();
     // console.log('user ne ' + JSON.stringify(this.state.user));
     this.getAllFood();
@@ -137,7 +151,7 @@ export default class Home extends Component {
 
   renderBanners = () => {
     return (
-      <View style={{alignItems: 'center', elevation: 16}}>
+      <Animated.View style={{alignItems: 'center', elevation: 16, transform: [{scale: this.state.bannerSpringValue}]}}>
         <Swiper
           style={{
             height: width / 2,
@@ -186,7 +200,7 @@ export default class Home extends Component {
             source={require('../assets/banners/3.jpg')}
           />
         </Swiper>
-      </View>
+      </Animated.View>
     );
   };
 
@@ -201,6 +215,7 @@ export default class Home extends Component {
           navigation={this.props.navigation}
           Categories={this.state.Categories}
           user={this.state.user}
+          spring = {this.state.categorySpringValue}
         />
       </View>
     );
@@ -219,7 +234,7 @@ export default class Home extends Component {
           <Text style={styles.RecommendText}>Recommend</Text>
         </View>
         <View>             
-            <RecommendItem Foods = {this.state.RandomFoods} navigation = {this.props.navigation}/>         
+            <RecommendItem Foods = {this.state.RandomFoods} spring = {this.state.foodSpringValue} navigation = {this.props.navigation}/>         
         </View>
       </View>
     );

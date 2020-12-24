@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from 'react'
-import { Text, View, Dimensions, Image, TouchableOpacity, FlatList,StyleSheet, ToastAndroid } from 'react-native'
+import { Text, View, Dimensions, Image, TouchableOpacity, FlatList,StyleSheet, ToastAndroid , 
+Animated} from 'react-native'
 import Button from '../component/Button'
 import firestore from '@react-native-firebase/firestore'
 import database, {firebase} from '@react-native-firebase/database'
@@ -8,11 +9,20 @@ import Cart from '../screens/Cart'
 const { width, height } = Dimensions.get('window')
 export class RenderFood extends Component {
   state = {
-    Cart: []
+    Cart: [],
+    springValue: new Animated.Value(0.3)
+  }
+  springAnimation = ()=>{
+    Animated.spring(this.state.springValue, {
+      toValue: 1,
+      friction: 5,
+      useNativeDriver: true
+    }).start()
   }
   render() {
     return (
       <FlatList 
+      style = {{}}
         data = {this.props.Foods}
         renderItem = {this.RenderItem}
         keyExtractor = {item=>item.id}
@@ -25,20 +35,20 @@ export class RenderFood extends Component {
   }
   componentDidMount(){
     this.getCart()
-   
+    this.springAnimation()
   }
 
   RenderItem = ({item}) => {    
     return (      
       <TouchableOpacity
-        activeOpacity={0.9}
+        activeOpacity={0.9}        
         onPress={() => {  
           this.props.navigation.navigate('FoodDetail', {food: item});
         }}>
-        <View style={styles.containerFood}>
-          <Image
+        <View style={[styles.containerFood, ]}>
+          <Animated.Image
             source={{uri: item._data.FoodImage}}
-            style={styles.imgFood}
+            style={[styles.imgFood, {transform:[{scale: this.props.spring?this.props.spring: 1}]}]}
             resizeMode="cover"
             resizeMethod = 'resize'
           />

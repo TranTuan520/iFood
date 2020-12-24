@@ -35,6 +35,12 @@ export class Login extends Component {
     onLogin = ()=>{
         if(this.state.email === 'admin' && this.state.password === '1') this.props.navigation.navigate('Managers')
         auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(user=>{                  
+        }).catch(e=>{
+            console.log(e.code)
+            if(e.code === 'auth/invalid-email')
+                alert('auth invalid email')
+            else if(e.code === 'auth/wrong-password')
+                alert('wrong password')
         })
     }
     render = () => {
@@ -77,7 +83,7 @@ export class Login extends Component {
                 }}>
                     <FontAwesome name='lock' size={32} color='tomato' style={{ marginStart: 6 }} />
                     <TextInput placeholder='Enter Password' height={40} secureTextEntry
-                        onChangeText={(password) => {this.setState({password}) }} />
+                        onChangeText={(password) => {this.setState({password: password}) }} />
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: 16, marginBottom: 16 }}>

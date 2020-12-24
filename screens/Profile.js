@@ -148,7 +148,7 @@ export default class Profile extends Component {
   }
 }
 const styles = StyleSheet.create({
-  containerHeader: {
+    containerHeader: {
     height: 250,
     backgroundColor: 'tomato',
     alignItems: 'center',

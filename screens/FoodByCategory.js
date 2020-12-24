@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  TextInput
+  TextInput, 
+  Animated
 } from 'react-native';
 import database from '@react-native-firebase/database';
 import RenderFood from '../component/RenderFood';
@@ -22,7 +23,8 @@ export class FoodByCategory extends Component {
       SelectedCat: this.props.route.params.CatId,
       Categories: [],
       keyword: '',
-      AllFood: []
+      AllFood: [], 
+      foodSpringValue: new Animated.Value(0.3)
     };
     //this.setCat = this.setCat.bind(this)
   }
@@ -38,6 +40,13 @@ export class FoodByCategory extends Component {
      })
      return Foods   
    }
+   SpringAnimation = (Ani) =>{
+     Animated.spring(Ani, {
+       toValue: 1,
+       friction: 5,
+       useNativeDriver: true
+     }).start()
+   }
 
   getAllFood = async () => {
   await  firestore()
@@ -49,6 +58,7 @@ export class FoodByCategory extends Component {
         });
         this.state.Foods == undefined? this.setState({Foods, AllFood: Foods})
             :this.setState({AllFood: Foods});
+        this.SpringAnimation(this.state.foodSpringValue);
       })     
   };
   getAllCategory = () => {
@@ -159,6 +169,7 @@ export class FoodByCategory extends Component {
           <RenderFood
             navigation={this.props.navigation}
             Foods={this.getFoodByCategory()}
+            spring = {this.state.foodSpringValue}
           />
         </View>
       </View>

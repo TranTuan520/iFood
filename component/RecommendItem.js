@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleSheet, TouchableOpacity,FlatList } from 'react-native'
+import { Text, View, TextInput, Dimensions, ScrollView, Image, StyleSheet, TouchableOpacity,FlatList, Animated } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Swiper from 'react-native-swiper'
 import { COLORS, FONTS } from '../constants/theme'
@@ -8,14 +8,24 @@ import database, { firebase } from "@react-native-firebase/database";
 import firestore from '@react-native-firebase/firestore'
 class RecommendItem extends Component {
     state = {
-        Cart: [],        
+        Cart: [],   
+        //springValue: new Animated.Value(0.3)     
     }
+    // springAnimation = ()=>{
+    //     Animated.spring(this.state.springValue, {
+    //       toValue: 1,
+    //       friction: 5,
+    //       useNativeDriver: true
+    //     }).start()
+    //   }
     componentDidMount(){
-        this.getCart()
+      this.getCart()
+     // this.springAnimation()
     }
     render(){
         return(
             <FlatList 
+            style = {{}}
             data = {this.props.Foods}
             renderItem = {this.renderItem}
             keyExtractor = {(item)=>item.id}
@@ -44,7 +54,7 @@ class RecommendItem extends Component {
                }).then()
            }
            else{
-             ToastAndroid.show('ngu lz', ToastAndroid.LONG)
+             ToastAndroid.show('san pham da co trong gio hang', ToastAndroid.LONG)
            }
      };
     renderItem=({item})=>{
@@ -62,10 +72,9 @@ class RecommendItem extends Component {
             }}>
                 <View style={{
                     width: 300,
-                    height: 120,
-                    
+                    height: 120,                    
                 }}>
-                    <Image source={{uri: item._data.FoodImage}} style={{ width: 300, height: 120, borderRadius: 6 }}
+                    <Animated.Image source={{uri: item._data.FoodImage}} style={{ width: 300, height: 120, borderRadius: 6, transform:[{scale: this.props.spring}] }}
                         resizeMode='cover' resizeMethod = 'resize' />
                 </View>
                 <View style={{ marginStart: 8 }}>
