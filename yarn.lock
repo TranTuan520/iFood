@@ -1281,6 +1281,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-10.2.0.tgz#64e51f16840b5050a53c8d9294a5121a0404fac2"
   integrity sha512-URudHjpSuMG7LqObhC5EeBB+E7aFSljR3wU85Zy0fDOn5fE3+NOOSWyejc7vT7p6S06FlKvRJZZ/6VYT6q/kyQ==
 
+"@react-native-firebase/messaging@^10.3.1":
+  version "10.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-10.3.1.tgz#f764295ccb6fe97747dda097810d6d9c94b6c6c2"
+  integrity sha512-Ls1nkmP5YvD3nV5Vq7gwxu77TgaVGwuDc8jZB2AgpPWc1mse8/xkqRMuZ/ZXd3oPfuUiu1dlxET9SB2YrAR/Mw==
+
 "@react-native-firebase/storage@^10.1.1":
   version "10.1.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-10.1.1.tgz#b1834212f8094445d597ca0a9a79f7d81ce0843b"
@@ -6098,6 +6103,11 @@ react-native-progress@^4.1.2:
     "@react-native-community/art" "^1.1.2"
     prop-types "^15.7.2"
 
+react-native-raw-bottom-sheet@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-raw-bottom-sheet/-/react-native-raw-bottom-sheet-2.2.0.tgz#d11dabb86aadb014273767ef7b554924b13633c5"
+  integrity sha512-qL4JKIqvbcVxbkKzeh51hjV7suoJN3ouxzvLmOg0FBUV1yiJAfEbacjQdtRCI6+OU5pyGFBIifLsTXcFDwHggg==
+
 react-native-reanimated@^1.13.2:
   version "1.13.2"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.13.2.tgz#1ae5457b24b4913d173a5a064bb28eae7783d293"
@@ -6236,6 +6246,11 @@ readable-stream@^2.0.1, readable-stream@^2.2.2, readable-stream@~2.3.6:
     safe-buffer "~5.1.1"
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
+
+reanimated-bottom-sheet@^1.0.0-alpha.22:
+  version "1.0.0-alpha.22"
+  resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.22.tgz#01a200946f1a461f01f1e773e5b4961c2df2e53b"
+  integrity sha512-NxecCn+2iA4YzkFuRK5/b86GHHS2OhZ9VRgiM4q18AC20YE/psRilqxzXCKBEvkOjP5AaAvY0yfE7EkEFBjTvw==
 
 regenerate-unicode-properties@^8.2.0:
   version "8.2.0"

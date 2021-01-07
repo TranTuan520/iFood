@@ -108,7 +108,6 @@ export class FoodDetail extends Component {
             style={{
               width: 90,
               flex: 1,
-
               alignItems: 'center',
               justifyContent: 'center',
             }}>
@@ -170,7 +169,7 @@ export class FoodDetail extends Component {
            }).then(()=>console.log(this.state.Cart))
        }
        else{
-         ToastAndroid.show('ngu lz', ToastAndroid.LONG)
+         ToastAndroid.show('san pham da co trong gio hang', ToastAndroid.LONG)
        }
  };
  

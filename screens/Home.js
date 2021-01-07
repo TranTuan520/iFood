@@ -17,6 +17,7 @@ const {width, height} = Dimensions.get('window');
 import firestore from '@react-native-firebase/firestore';
 //database
 import database, {firebase} from '@react-native-firebase/database';
+import messaging from '@react-native-firebase/messaging';
 import auth from '@react-native-firebase/auth';
 import RecommendItem from '../component/RecommendItem';
 import RenderCategory from '../component/RenderCategory';
@@ -100,6 +101,7 @@ export default class Home extends Component {
   };
 
   componentDidMount = () => {
+    
     this.springAnimation(this.state.bannerSpringValue)
     this.getUserInfo();
     // console.log('user ne ' + JSON.stringify(this.state.user));
@@ -107,6 +109,9 @@ export default class Home extends Component {
     this.getAllCategory();
     this.getCart();
     // console.log(this.state.Foods);
+    messaging().onMessage(async remoteMessage => {
+      alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
   };
 
   renderHeader1 = () => {

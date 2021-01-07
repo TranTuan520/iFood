@@ -27,7 +27,7 @@ export class RenderFood extends Component {
         renderItem = {this.RenderItem}
         keyExtractor = {item=>item.id}
         showsVerticalScrollIndicator = {false}
-        extraData = {this.props.Foods}
+        //extraData = {this.props.Foods}
         removeClippedSubviews      
         >            
         </FlatList>
@@ -95,7 +95,7 @@ export class RenderFood extends Component {
           }).then()
       }
       else{
-        ToastAndroid.show('ngu lz', ToastAndroid.LONG)
+        ToastAndroid.show('mon an da co trong gio hang', ToastAndroid.LONG)
       }
 };
 

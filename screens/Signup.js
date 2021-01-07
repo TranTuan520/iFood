@@ -39,7 +39,7 @@ export class Signup extends Component {
     ) {
       Alert.alert('?', '?');
     } else if (this.state.password != this.state.confirmPassword) {
-      Alert.alert('!!!', 'confirm password invalid');
+      //Alert.alert('!!!', 'confirm password invalid');
       return;
     } else {
     
@@ -51,21 +51,20 @@ export class Signup extends Component {
           // console.log('id: '+JSON.stringify(USER.uid))
           //this.getUserInfo(user.uid);
           //Alert.alert('yeahh', 'User account created'); 
-          Alert.alert('yeah', 'your accout is created')
+          
           //auth().signOut();                   
           this.props.navigation.navigate('Login');
         })
         .catch((error) => {
-          // if (error.code === 'auth/email-already-in-use') {
-          //   alert('That email address is already in use!');
-          // }
+          if (error.code === 'auth/email-already-in-use') {
+            alert('That email address is already in use!');
+          }
 
-          // if (error.code === 'auth/invalid-email') {
-          //   alert('That email address is invalid!');
-          // }
+          if (error.code === 'auth/invalid-email') {
+            alert('That email address is invalid!');
+          }
 
-
-          console.log(error);
+          alert(error);
         });
     }
   };
@@ -222,7 +221,7 @@ export class Signup extends Component {
               <Text style={{...FONTS.h3, color: 'black'}}>
                 Have an account?
               </Text>
-              <TouchableOpacity onPress={() => {this.props.navigation.navigate('Login')}}>
+              <TouchableOpacity onPress={() => {}}>
                 <Text style={{...FONTS.h3, color: 'tomato', marginStart: 6}}>
                   Login
                 </Text>
